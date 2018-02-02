@@ -1,0 +1,17 @@
+<label for="pwd">Method of payments:</label>
+          
+<div class="btn-group-vertical btn-block btns-pmts-option" data-toggle="buttons">
+  <button type="button" class="btn btn-defult {{immdt_btn.mop_btn_active}}" (click)="showScreenBelow($event)">{{immdt_btn.mopName}}  {{immidiateFee}}</button>
+  <button type="button" class="btn btn-defult {{db_btn.mop_btn_active}}" (click)="showScreenBelow($event)">{{db_btn.mopName}}  {{directDebitFee}}</button>
+  <button type="button" class="btn btn-defult {{loan_btn.mop_btn_active}}" (click)="showScreenBelow($event)">{{loan_btn.mopName}} {{loanFee}}</button>
+  <button type="button" class="btn btn-defult {{sp_btn.mop_btn_active}}" (click)="showScreenBelow($event)">{{sp_btn.mopName}} {{sheepFee}}</button>
+</div>
+
+
+<div class="panel panel-default block-fee-info" *ngIf="isVisible">
+    <div class="panel-body" (dblclick)="closeScreen()">{{titleFeeBox}} fees</div>
+    <div class="panel-footer">12% tax</div>
+    <div class="panel-footer">25% bank tax</div>
+    <div class="panel-footer">55% country tax</div>
+</div>
+

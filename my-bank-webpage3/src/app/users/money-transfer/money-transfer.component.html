@@ -1,0 +1,35 @@
+<form action="/action_page.php">
+  <div class="form-group">
+    <label for="email">Please choose the recipient:</label>
+    
+    <div class="dropdown"  dropdown [dropdownToggle]="true" >
+      <button class="btn btn-primary dropdown-toggle btn-block" dropdown-open type="button" >{{agent}}
+      <span class="caret"></span></button>
+      <ul class="dropdown-menu" >
+        <li><a href="#"  *ngFor="let agent of agentList" (click)="setChoosenAgent($event)">{{agent}}</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="form-group ">
+    <label for="pwd">Please enter account:</label>
+    <input type="text" class="form-control" id="pwd" [(ngModel)]="accountNumber" [ngModelOptions]="{standalone: true}">
+  </div>
+  <div class="form-group">
+    <label for="pwd">Please enter amount:</label>
+    <input type="number" class="form-control" id="pwd" [(ngModel)]="amount" [ngModelOptions]="{standalone: true}">
+  </div>
+  <button type="button" class="btn btn-primary btn-block {{calculate_fees_disable}}" (click)="calculateFees()">Calculate Fees Options</button>
+  <button type="button" class="btn btn-primary btn-block" *ngIf="isVisible" (click)="sumerrize()">Transfer Money</button>
+</form>
+
+
+<div class="card well sum-all-card" *ngIf="isVisible2" style="width: 35rem;">   
+    <img class="card-img-top" src="..." alt="Card image cap">
+    <div class="card-block">
+      <h4 class="card-title">Summarize Transaction</h4>
+      <p class="card-text">Amount+fees</p>
+      <p class="card-text">sending over to SBSA</p>
+      <a href="#" class="btn btn-primary btn-block">Submit</a>
+    </div>
+</div>
