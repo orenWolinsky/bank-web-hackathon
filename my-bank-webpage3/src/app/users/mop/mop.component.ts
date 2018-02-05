@@ -2,7 +2,7 @@ import { Component, OnInit ,Input,Output,EventEmitter} from '@angular/core';
 import {FeesService} from "../service/fees.service";
 import {TransferInfo} from "../json/transferInfo.json";
 import {MopService} from "../service/mop.service";
-
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-mop',
@@ -28,14 +28,21 @@ export class MopComponent implements OnInit {
   public sp_btn:MOPOption = new MOPOption("Sheep",this.active);
 
   constructor(private _feeService:FeesService,private _mopService:MopService) { 
-    this._mopService.mopSubject.subscribe((bol:boolean)=>{
-      console.log('subsrice is working' + bol);
-      this.isVisible = bol;
-    });
+    this.startCalculatingFees(null);
+    this.mopSubject();
   }
 
   ngOnInit() {
-    
+    //this.isVisible = true;
+  }
+
+
+  public mopSubject(){
+    this._mopService.mopSubject.subscribe((bol:boolean[])=>{
+      console.log('subsrice is working' + bol);
+      this.isVisible = bol[0];
+      console.log(this.isVisible);
+    });
   }
 
   public startCalculatingFees(info:TransferInfo){
