@@ -13,7 +13,7 @@ import {TransferInfo} from "../json/transferInfo.json";
 export class MoneyTransferComponent implements OnInit {
 
   @Output() public agentList:string[] = ["SBSA","Ned Bank","ANZ","Sheep Bank"];
-  public agent:string = "Agent Dropdown";
+  public agent:string = "Agent Dropdown dfadsf";
   public accountNumber:string = "";
   public amount:number= 0;
   public isVisible:boolean = false;
