@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FeesService} from "./users/service/fees.service";
-
+import {MopService} from "./users/service/mop.service";
 import {DropdownModule} from "ng2-dropdown";
 import { AppComponent } from './app.component';
 import { NavbarComponentComponent } from './users/navbar-component/navbar-component.component';
@@ -27,7 +27,8 @@ import {HttpClientModule} from '@angular/common/http';
     HttpClientModule
   ],
   providers: [
-    FeesService
+    FeesService,
+    MopService
   ],
   bootstrap: [AppComponent]
 })

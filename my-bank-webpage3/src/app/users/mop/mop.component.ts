@@ -1,13 +1,14 @@
 import { Component, OnInit ,Input,Output,EventEmitter} from '@angular/core';
 import {FeesService} from "../service/fees.service";
 import {TransferInfo} from "../json/transferInfo.json";
+import {MopService} from "../service/mop.service";
 
 
 @Component({
   selector: 'app-mop',
   templateUrl: './mop.component.html',
   styleUrls: ['./mop.component.css'],
-  providers:[FeesService],
+  providers:[FeesService,MopService],
 })
 export class MopComponent implements OnInit {
   public immidiateFee:string = "d";
@@ -26,8 +27,11 @@ export class MopComponent implements OnInit {
   public loan_btn:MOPOption = new MOPOption("Loan",this.disabled);
   public sp_btn:MOPOption = new MOPOption("Sheep",this.active);
 
-  constructor(private _feeService:FeesService) { 
-    this.startCalculatingFees(new TransferInfo("d","d",1));
+  constructor(private _feeService:FeesService,private _mopService:MopService) { 
+    this._mopService.mopSubject.subscribe((bol:boolean)=>{
+      console.log('subsrice is working' + bol);
+      this.isVisible = bol;
+    });
   }
 
   ngOnInit() {
