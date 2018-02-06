@@ -11,7 +11,7 @@ import {MopService} from "../service/mop.service";
 })
 export class MoneyTransferComponent implements OnInit {
 
-  @Output() public agentList:string[] = ["SBSA","Ned Bank","ANZ","Sheep Bank"];
+  public agentList:string[] = [];
   public agent:string = "Agent Dropdown";
   public accountNumber:string = "";
   public amount:number= 0;
@@ -23,6 +23,7 @@ export class MoneyTransferComponent implements OnInit {
   private active:string = "active";
   constructor(private _mopService:MopService) { //private _mopComponent:MopComponent,
 
+    this.agentList = this._mopService.agentList;
 
    }
 

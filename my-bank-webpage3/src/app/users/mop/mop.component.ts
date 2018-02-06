@@ -23,35 +23,26 @@ export class MopComponent implements OnInit {
 
   public immdt_btn:MOPOption = new MOPOption("Immidiate",this.active);;
   public db_btn:MOPOption = new MOPOption("Direct Debit",this.active);
-  public loan_btn:MOPOption = new MOPOption("Loan",this.disabled);
-  public sp_btn:MOPOption = new MOPOption("Sheep",this.active);
+  public loan_btn:MOPOption = new MOPOption("Loan",this.active);
 
-  public str:string = "str";
 
   constructor(private _feeService:FeesService,private _mopService:MopService) { 
     this.startCalculatingFees(null);
     
-    this._mopService.mopSubject.subscribe((str:string)=>{
-      console.log('subsrice is working' + str);
-      this.isVisible = true;//bol[0];
-      this.str = str;
-      console.log(this.isVisible);
-      console.log(this.str);
+    this._mopService.mopSubject.subscribe((arr:boolean[])=>{
+      console.log('subsrice is working' + arr);
+      //this.immdt_btn.isActive
+      this.immdt_btn.setActivation(arr[0]);
+      this.db_btn.setActivation(arr[1]);
+      this.loan_btn.setActivation(arr[2]);
     });
   }
 
   ngOnInit() {
-    //this.isVisible = true;
   }
 
 
-  public mopSubject(){
-    // this._mopService.mopSubject.subscribe((bol:boolean[])=>{
-    //   console.log('subsrice is working' + bol);
-    //   this.isVisible = bol[0];
-    //   console.log(this.isVisible);
-    // });
-  }
+
 
   public startCalculatingFees(info:TransferInfo){
 
@@ -97,9 +88,6 @@ export class MopComponent implements OnInit {
     else if(title.includes(this.loan_btn.mopName)){
       return this.loan_btn.isActive();
     }
-    else if(title.includes(this.sp_btn.mopName)){
-      return this.sp_btn.isActive();
-    }
     return false;
   }
 }
@@ -117,5 +105,13 @@ class MOPOption{
 
   isActive():boolean{
     return (this.mop_btn_active === this.active) ? true:false;
+  }
+
+  public setActivation(bol:boolean){
+    if(bol){
+      this.mop_btn_active = this.active;
+    }else{
+      this.mop_btn_active = this.disabled;
+    }
   }
 }
