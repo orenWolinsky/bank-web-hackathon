@@ -7,8 +7,7 @@ import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-mop',
   templateUrl: './mop.component.html',
-  styleUrls: ['./mop.component.css'],
-  providers:[FeesService,MopService],
+  styleUrls: ['./mop.component.css']
 })
 export class MopComponent implements OnInit {
   public immidiateFee:string = "d";
@@ -27,9 +26,18 @@ export class MopComponent implements OnInit {
   public loan_btn:MOPOption = new MOPOption("Loan",this.disabled);
   public sp_btn:MOPOption = new MOPOption("Sheep",this.active);
 
+  public str:string = "str";
+
   constructor(private _feeService:FeesService,private _mopService:MopService) { 
     this.startCalculatingFees(null);
-    this.mopSubject();
+    
+    this._mopService.mopSubject.subscribe((str:string)=>{
+      console.log('subsrice is working' + str);
+      this.isVisible = true;//bol[0];
+      this.str = str;
+      console.log(this.isVisible);
+      console.log(this.str);
+    });
   }
 
   ngOnInit() {
@@ -38,11 +46,11 @@ export class MopComponent implements OnInit {
 
 
   public mopSubject(){
-    this._mopService.mopSubject.subscribe((bol:boolean[])=>{
-      console.log('subsrice is working' + bol);
-      this.isVisible = bol[0];
-      console.log(this.isVisible);
-    });
+    // this._mopService.mopSubject.subscribe((bol:boolean[])=>{
+    //   console.log('subsrice is working' + bol);
+    //   this.isVisible = bol[0];
+    //   console.log(this.isVisible);
+    // });
   }
 
   public startCalculatingFees(info:TransferInfo){

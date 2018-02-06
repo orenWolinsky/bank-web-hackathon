@@ -7,8 +7,7 @@ import {MopService} from "../service/mop.service";
 @Component({
   selector: 'app-money-transfer',
   templateUrl: './money-transfer.component.html',
-  styleUrls: ['./money-transfer.component.css'],
-  providers:[MopComponent,MopService]
+  styleUrls: ['./money-transfer.component.css']
 })
 export class MoneyTransferComponent implements OnInit {
 
@@ -22,7 +21,7 @@ export class MoneyTransferComponent implements OnInit {
 
   private disabled:string = "disabled";
   private active:string = "active";
-  constructor(private _mopComponent:MopComponent,private _mopService:MopService) {
+  constructor(private _mopService:MopService) { //private _mopComponent:MopComponent,
 
 
    }
@@ -36,12 +35,13 @@ export class MoneyTransferComponent implements OnInit {
   }
 
   calculateFees(){
-    this._mopComponent.startCalculatingFees(new TransferInfo(this.agent,this.accountNumber,this.amount));
+    //this._mopComponent.startCalculatingFees(new TransferInfo(this.agent,this.accountNumber,this.amount));
     this.isVisible = true;
     this.calculate_fees_disable = this.disabled;
   }
 
   sumerrize(){
     this.isVisible2 = true;
+    //this._mopService.blockOptions(this.agent);
   }
 }
