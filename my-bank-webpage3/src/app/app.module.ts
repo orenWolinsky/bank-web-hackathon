@@ -10,6 +10,7 @@ import { MoneyTransferComponent } from './users/money-transfer/money-transfer.co
 import { MopComponent } from './users/mop/mop.component';
 import { FormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import { PopupComponent } from './popup/popup.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import {HttpClientModule} from '@angular/common/http';
     JambatronComponent,
     MoneyTransferComponent,
     MopComponent,
+    PopupComponent,
   ],
   imports: [
     BrowserModule,
