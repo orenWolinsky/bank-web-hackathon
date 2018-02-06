@@ -45,4 +45,8 @@ export class MoneyTransferComponent implements OnInit {
     this.isVisible2 = true;
     //this._mopService.blockOptions(this.agent);
   }
+
+  refresh(): void {
+    window.location.reload();
+  }
 }
