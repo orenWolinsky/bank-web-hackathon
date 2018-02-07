@@ -11,6 +11,7 @@ import { MopComponent } from './users/mop/mop.component';
 import { FormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import { PopupComponent } from './popup/popup.component';
+import {RouterModule} from '@angular/router';
 
 
 @NgModule({
@@ -26,7 +27,10 @@ import { PopupComponent } from './popup/popup.component';
     BrowserModule,
     DropdownModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot([
+      {path:'',component:AppComponent}
+    ])
   ],
   providers: [
     FeesService,

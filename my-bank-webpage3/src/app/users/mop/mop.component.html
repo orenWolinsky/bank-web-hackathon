@@ -1,21 +1,42 @@
 <label for="pwd">Method of payments:</label>
           
 <div class="btn-group-vertical btn-block btns-pmts-option" data-toggle="buttons">
-  <button type="button" class="btn btn-defult {{immdt_btn.mop_btn_active}}" (click)="showScreenBelow($event)">{{immdt_btn.mopName}}  {{immidiateFee}}</button>
-  <button type="button" class="btn btn-defult {{db_btn.mop_btn_active}}" (click)="showScreenBelow($event)">{{db_btn.mopName}}  {{directDebitFee}}</button>
-  <button type="button" class="btn btn-defult {{loan_btn.mop_btn_active}}" (click)="showScreenBelow($event)">{{loan_btn.mopName}} {{loanFee}}</button>
+  <button type="button" class="btn btn-defult {{immdt_btn.mop_btn_active}}" (click)="showScreenBelow($event)"><a data-toggle="tooltip" title="{{imdtInfo}}" style="color:black">{{immdt_btn.mopName}}  {{immidiateFee}}</a></button>
+  <button type="button" class="btn btn-defult {{urg_btn.mop_btn_active}}" (click)="showScreenBelow($event)"><a data-toggle="tooltip" title={{urgInfo}} style="color:black">{{urg_btn.mopName}}  {{directDebitFee}}</a></button>
+  <button type="button" class="btn btn-defult {{nUrg_btn.mop_btn_active}}" (click)="showScreenBelow($event)"><a data-toggle="tooltip" title={{nUrgInfo}} style="color:black">{{nUrg_btn.mopName}} {{loanFee}}</a></button>
 </div>
+
 
 
 <div class="panel panel-default block-fee-info" *ngIf="isVisible">
+
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#">SH</a></li>
-        <li><a href="#">UE</a></li>
-        <li><a href="#">ME</a></li>
+        <li class="active"><a data-toggle="tab" href="#sha">SHA</a></li>
+        <li><a data-toggle="tab" href="#ben">BEN</a></li>
+        <li><a data-toggle="tab" href="#our">OUR</a></li>
       </ul>
-    <div class="panel-body" (dblclick)="closeScreen()">{{titleFeeBox}} fees</div>
-    <div class="panel-footer">12% tax</div>
-    <div class="panel-footer">25% bank tax</div>
-    <div class="panel-footer">55% country tax</div>
+      
+      <div class="tab-content">
+        <div id="sha" class="tab-pane fade in active">
+            <div class="panel-body" (dblclick)="closeScreen()">Shared {{titleFeeBox}} fees</div>
+            <div class="panel-footer">12% tax</div>
+            <div class="panel-footer">25% bank tax</div>
+            <div class="panel-footer">55% country tax</div>
+        </div>
+        <div id="ben" class="tab-pane fade">
+            <div class="panel-body" (dblclick)="closeScreen()">Beneficiary {{titleFeeBox}} fees</div>
+            <div class="panel-footer">12% tax</div>
+            <div class="panel-footer">25% bank tax</div>
+            <div class="panel-footer">55% country tax</div>
+        </div>
+        <div id="our" class="tab-pane fade">
+            <div class="panel-body" (dblclick)="closeScreen()">Our {{titleFeeBox}} fees</div>
+            <div class="panel-footer">12% tax</div>
+            <div class="panel-footer">25% bank tax</div>
+            <div class="panel-footer">55% country tax</div>
+        </div>
+      </div>
+
 </div>
+
 

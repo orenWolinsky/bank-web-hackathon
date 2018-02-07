@@ -22,9 +22,14 @@ export class MopComponent implements OnInit {
   private active:string = "active";
 
   public immdt_btn:MOPOption = new MOPOption("Immidiate",this.active);;
-  public db_btn:MOPOption = new MOPOption("Direct Debit",this.active);
-  public loan_btn:MOPOption = new MOPOption("Loan",this.active);
+  public urg_btn:MOPOption = new MOPOption("Urgent",this.active);
+  public nUrg_btn:MOPOption = new MOPOption("Non Urgent",this.active);
 
+  public Content:string;
+
+  public imdtInfo:string = "Immidate tranfer, will be done by end of day";
+  public urgInfo:string = "Urgent tranfer will be done right away";
+  public nUrgInfo:string = "Non urgent tranfer will not be urgent";
 
   constructor(private _feeService:FeesService,private _mopService:MopService) { 
     this.startCalculatingFees(null);
@@ -33,8 +38,8 @@ export class MopComponent implements OnInit {
       console.log('subsrice is working' + arr);
       //this.immdt_btn.isActive
       this.immdt_btn.setActivation(arr[0]);
-      this.db_btn.setActivation(arr[1]);
-      this.loan_btn.setActivation(arr[2]);
+      this.urg_btn.setActivation(arr[1]);
+      this.nUrg_btn.setActivation(arr[2]);
     });
   }
 
@@ -79,16 +84,22 @@ export class MopComponent implements OnInit {
   }
 
   private isblocked(title:string):boolean{
-    if(title.includes(this.db_btn.mopName)){
-      return this.db_btn.isActive();
+    if(title.includes(this.urg_btn.mopName)){
+      return this.urg_btn.isActive();
     }
     else if(title.includes(this.immdt_btn.mopName)){
       return this.immdt_btn.isActive();
     }
-    else if(title.includes(this.loan_btn.mopName)){
-      return this.loan_btn.isActive();
+    else if(title.includes(this.nUrg_btn.mopName)){
+      return this.nUrg_btn.isActive();
     }
     return false;
+  }
+
+
+  public clickTab(event):void{
+    console.log('pressed '+event.target.text);
+    event.target.classList.add('active');
   }
 }
 

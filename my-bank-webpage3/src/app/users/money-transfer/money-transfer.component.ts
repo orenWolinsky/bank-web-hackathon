@@ -11,8 +11,8 @@ import {MopService} from "../service/mop.service";
 })
 export class MoneyTransferComponent implements OnInit {
 
-  public agentList:string[] = [];
-  public agent:string = "Agent Dropdown";
+  public accList:string[] = [];
+  public myAccounts:string = "My Accounts";
   public accountNumber:string = "";
   public amount:number= 100.00;
   public isVisible:boolean = false;
@@ -23,16 +23,16 @@ export class MoneyTransferComponent implements OnInit {
   private active:string = "active";
   constructor(private _mopService:MopService) { //private _mopComponent:MopComponent,
 
-    this.agentList = this._mopService.agentList;
+    this.accList = this._mopService.accList;
 
    }
 
   ngOnInit() {
   }
 
-  setChoosenAgent(event){
-    this.agent = event.target.text;
-    this._mopService.blockOptions(this.agent);
+  setChoosenAccount(event){
+    this.myAccounts = event.target.text;
+    this._mopService.blockOptions(this.myAccounts);
   }
 
   calculateFees(){

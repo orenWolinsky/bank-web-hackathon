@@ -10,8 +10,8 @@ export class MopService{
     public mopSubject:Subject<boolean[]> = new Subject();
     public mopOptionsArr:boolean[] = [];
     //all product actions are here
-    private ned:string = "SBSA";
-    public agentList:string[] = ["SBSA","Ned Bank","ANZ","Sheep Bank","SwedBank"];
+    private curr:string = "Current";
+    public accList:string[] = ["Current","Savings","Expenses"];
     //have a map of key - string and value - array of 3 booleans, return array of booleans based on the selected product
 
     public blockOptions(product:string){
@@ -20,7 +20,7 @@ export class MopService{
         this.str = product;
         this.mopOptionsArr = [];
         
-        if(product === this.ned){
+        if(product === this.curr){
             this.mopOptionsArr.push(true);
             this.mopOptionsArr.push(true);
             this.mopOptionsArr.push(false);
