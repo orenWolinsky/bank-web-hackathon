@@ -23,4 +23,11 @@ export class FeesService{
                 return result;
             })
     }
+    /**
+     * so money should use the get calculation
+     * later is should update another service method with the updates.
+     * and that mthod should have an observer and it will emit the changes to mop component
+     * 
+     * 
+     */
 }

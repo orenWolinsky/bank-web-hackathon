@@ -1,28 +1,33 @@
 <form action="/action_page.php">
-  <div class="form-group">
-    <label for="email">Please choose the recipient:</label>
-    
-    <div class="dropdown"  dropdown [dropdownToggle]="true" >
-      <button class="btn btn-primary dropdown-toggle btn-block" dropdown-open type="button" >{{agent}}
-      <span class="caret"></span></button>
-      <ul class="dropdown-menu" >
-        <li><a href="#"  *ngFor="let agent of agentList" (click)="setChoosenAgent($event)">{{agent}}</a></li>
-      </ul>
-    </div>
-  </div>
+
   
-  <div class="form-group ">
-    <label for="pwd">Please enter account:</label>
-    <input type="text" class="form-control" id="pwd" [(ngModel)]="accountNumber" [ngModelOptions]="{standalone: true}">
-  </div>
   <div class="form-group">
-    <label for="pwd">Please enter amount:</label>
-    <input type="number" class="form-control currency" id="pwd" [(ngModel)]="amount" [ngModelOptions]="{standalone: true}">
+      <label for="email">Choose Your Account:</label>
+      
+      <div class="dropdown"  dropdown [dropdownToggle]="true" >
+        <button class="btn btn-primary dropdown-toggle btn-block" dropdown-open type="button" >{{agent}}
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu" >
+          <li><a href="#"  *ngFor="let agent of agentList" (click)="setChoosenAgent($event)">{{agent}}</a></li>
+        </ul>
+      </div>
+  </div>
+
+
+  <div class="form-group">
+    <label for="pwd">Choose Amount:</label>
+    
     <div class="input-group"> 
-      <span class="input-group-addon">$</span>
-      <input type="number" value="100.00" min="0" step="0.50" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" id="c2" />
+      <span class="input-group-addon" >$</span>
+      <input type="number" value="100.00" min="0" step="0.50" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" id="c2"  [(ngModel)]="amount" [ngModelOptions]="{standalone: true}"/>
     </div> 
   </div>
+  <div class="form-group ">
+      <label for="pwd">Enter BIC:</label>
+      <input type="text" class="form-control" id="pwd" [(ngModel)]="accountNumber" [ngModelOptions]="{standalone: true}">
+  </div>
+
+
   <button type="button" class="btn btn-primary btn-block {{calculate_fees_disable}}" (click)="calculateFees()">Calculate Fees Options</button>
   <button type="button" class="btn btn-primary btn-block" *ngIf="isVisible" (click)="sumerrize()">Transfer Money</button>
 </form>
@@ -45,15 +50,15 @@
   <div class="modal-dialog">
 
     <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
+    <div class="modal-content ">
+      <div class="modal-header modal-bank">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Money is Transfered</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body modal-bank">
         <p>Thank you, come again</p>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer modal-bank">
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="refresh()">Close</button>
       </div>
     </div>

@@ -14,7 +14,7 @@ export class MoneyTransferComponent implements OnInit {
   public agentList:string[] = [];
   public agent:string = "Agent Dropdown";
   public accountNumber:string = "";
-  public amount:number= 0;
+  public amount:number= 100.00;
   public isVisible:boolean = false;
   public isVisible2:boolean = false;
   public calculate_fees_disable:string ="";

@@ -8,6 +8,11 @@
 
 
 <div class="panel panel-default block-fee-info" *ngIf="isVisible">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#">SH</a></li>
+        <li><a href="#">UE</a></li>
+        <li><a href="#">ME</a></li>
+      </ul>
     <div class="panel-body" (dblclick)="closeScreen()">{{titleFeeBox}} fees</div>
     <div class="panel-footer">12% tax</div>
     <div class="panel-footer">25% bank tax</div>
