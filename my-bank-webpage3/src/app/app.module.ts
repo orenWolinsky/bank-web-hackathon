@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import { PopupComponent } from './popup/popup.component';
 import {RouterModule} from '@angular/router';
+import { BicService } from './users/service/bic.service';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import {RouterModule} from '@angular/router';
   ],
   providers: [
     FeesService,
-    MopService
+    MopService,
+    BicService
   ],
   bootstrap: [AppComponent]
 })

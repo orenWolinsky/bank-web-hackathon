@@ -3,6 +3,7 @@ import {DropdownModule} from "ng2-dropdown";
 import {TransferInfo} from "../json/transferInfo.json";
 import {MopService} from "../service/mop.service";
 import { FeesService } from '../service/fees.service';
+import { BicService } from '../service/bic.service';
 
 @Component({
   selector: 'app-money-transfer',
@@ -21,11 +22,11 @@ export class MoneyTransferComponent implements OnInit {
 
   private disabled:string = "disabled";
   private active:string = "active";
-  constructor(private _mopService:MopService,private _feeService:FeesService) {
+  constructor(private _mopService:MopService,private _feeService:FeesService,private _bicService:BicService) {
 
     this.accList = this._mopService.accList;
 
-   }
+  }
 
   ngOnInit() {
   }
@@ -34,6 +35,13 @@ export class MoneyTransferComponent implements OnInit {
     this.myAccounts = event.target.text;
     this._mopService.blockOptions(this.myAccounts);
   }
+
+  public bicCal(){
+
+    this.bic = this._bicService.autoComplete(this.bic);
+    
+  }
+
 
   calculateFees(){
     
