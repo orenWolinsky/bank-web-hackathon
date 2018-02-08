@@ -13,6 +13,8 @@ import {HttpClientModule} from '@angular/common/http';
 import { PopupComponent } from './popup/popup.component';
 import {RouterModule} from '@angular/router';
 import { BicService } from './users/service/bic.service';
+import { LoginComponent } from './login/login.component';
+import { AppRoutingModule } from './app-routing/app-routing.module';
 
 
 @NgModule({
@@ -23,15 +25,14 @@ import { BicService } from './users/service/bic.service';
     MoneyTransferComponent,
     MopComponent,
     PopupComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
     DropdownModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot([
-      {path:'',component:AppComponent}
-    ])
+    AppRoutingModule,
   ],
   providers: [
     FeesService,
