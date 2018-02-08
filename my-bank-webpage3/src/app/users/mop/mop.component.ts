@@ -10,10 +10,11 @@ import { ChangeDetectorRef } from '@angular/core';
   styleUrls: ['./mop.component.css']
 })
 export class MopComponent implements OnInit {
-  public immidiateFee:string = "d";
+  public immidiateFee:string = "";
   public directDebitFee:string = "";
   public loanFee:string = "";
   public sheepFee:string = "";
+
   public currency:string = "$";
   public isVisible:boolean = false;
   public titleFeeBox:string;
@@ -32,11 +33,18 @@ export class MopComponent implements OnInit {
   public nUrgInfo:string = "Non urgent tranfer will not be urgent";
 
   constructor(private _feeService:FeesService,private _mopService:MopService) { 
-    this.startCalculatingFees(null);
+    
+    this._feeService.feesSubject.subscribe((arr:string[])=>{
+      console.log("subscribed to fee service and recived fee " + arr);
+
+      this.immidiateFee = arr[0] +this.currency;
+      this.directDebitFee = arr[1] +this.currency;
+      this.loanFee = arr[2] + this.currency;
+
+    });
     
     this._mopService.mopSubject.subscribe((arr:boolean[])=>{
-      console.log('subsrice is working' + arr);
-      //this.immdt_btn.isActive
+      console.log('subscribed to mop service blocking options' + arr);
       this.immdt_btn.setActivation(arr[0]);
       this.urg_btn.setActivation(arr[1]);
       this.nUrg_btn.setActivation(arr[2]);
@@ -51,13 +59,13 @@ export class MopComponent implements OnInit {
 
   public startCalculatingFees(info:TransferInfo){
 
-    this._feeService.getFeesCalculation(info).subscribe((fees: string[]) => {
-      this.immidiateFee = fees[0] +this.currency;
-      this.directDebitFee = fees[1] +this.currency;
-      this.loanFee = fees[2] + this.currency;
-      this.sheepFee = fees[3] + this.currency;
-      console.log(fees);
-    });
+    // this._feeService.getFeesCalculation(info).subscribe((fees: string[]) => {
+    //   this.immidiateFee = fees[0] +this.currency;
+    //   this.directDebitFee = fees[1] +this.currency;
+    //   this.loanFee = fees[2] + this.currency;
+    //   this.sheepFee = fees[3] + this.currency;
+    //   console.log(fees);
+    // });
     
   }
 

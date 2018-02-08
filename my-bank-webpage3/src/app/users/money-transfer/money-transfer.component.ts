@@ -1,8 +1,8 @@
 import { Component, OnInit ,Input,Output} from '@angular/core';
 import {DropdownModule} from "ng2-dropdown";
-import {MopComponent} from "../mop/mop.component";
 import {TransferInfo} from "../json/transferInfo.json";
 import {MopService} from "../service/mop.service";
+import { FeesService } from '../service/fees.service';
 
 @Component({
   selector: 'app-money-transfer',
@@ -13,7 +13,7 @@ export class MoneyTransferComponent implements OnInit {
 
   public accList:string[] = [];
   public myAccounts:string = "My Accounts";
-  public accountNumber:string = "";
+  public bic:string = "";
   public amount:number= 100.00;
   public isVisible:boolean = false;
   public isVisible2:boolean = false;
@@ -21,7 +21,7 @@ export class MoneyTransferComponent implements OnInit {
 
   private disabled:string = "disabled";
   private active:string = "active";
-  constructor(private _mopService:MopService) { //private _mopComponent:MopComponent,
+  constructor(private _mopService:MopService,private _feeService:FeesService) {
 
     this.accList = this._mopService.accList;
 
@@ -36,9 +36,14 @@ export class MoneyTransferComponent implements OnInit {
   }
 
   calculateFees(){
-    //this._mopComponent.startCalculatingFees(new TransferInfo(this.agent,this.accountNumber,this.amount));
+    
     this.isVisible = true;
     this.calculate_fees_disable = this.disabled;
+
+    
+    this._feeService.startFeesCalculation(null).subscribe((fees:string[])=>{
+      console.log('started fee calculation '+fees);
+    });
   }
 
   sumerrize(){
