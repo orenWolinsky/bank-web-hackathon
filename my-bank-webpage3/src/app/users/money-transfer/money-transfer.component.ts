@@ -40,7 +40,10 @@ export class MoneyTransferComponent implements OnInit {
   public bicCal(){
     if(this.bicNgModel.control.status === 'VALID'){
       this.calculate_fees_disable = "";
+    }else{
+      this.calculate_fees_disable = "disabled";
     }
+    console.log(this.bicNgModel.control.status);
     this.bic = this._bicService.autoComplete(this.bic);
   }
 
