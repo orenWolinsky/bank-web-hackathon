@@ -20,37 +20,21 @@ import { AccountsComponent } from './users/accounts/accounts.component';
 import { HomeComponent } from './users/home/home.component';
 import { SheepComponent } from './users/sheep/sheep.component';
 import { SinginService } from './users/service/singin.service';
+import { AccountsService } from './users/service/accounts.service';
 // import { UsersModule } from './users/users.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    NavbarComponentComponent,
-    JambatronComponent,
-    MoneyTransferComponent,
-    MopComponent,
-    PopupComponent,
-    LoginComponent,
-    TransferComponent,
-    Navbar2Component,
-    AccountsComponent,
-    HomeComponent,
-    SheepComponent
-  ],
+    AppComponent,    NavbarComponentComponent,    JambatronComponent,    MoneyTransferComponent,    MopComponent,    PopupComponent,    LoginComponent,
+    TransferComponent,    Navbar2Component,    AccountsComponent,    HomeComponent,    SheepComponent
+    ],
   imports: [
-    BrowserModule,
-    DropdownModule,
-    FormsModule,
-    HttpClientModule,
-    AppRoutingModule,
+    BrowserModule,    DropdownModule,    FormsModule,    HttpClientModule,    AppRoutingModule,
     //UsersModule,
   ],
   providers: [
-    FeesService,
-    MopService,
-    BicService,
-    SinginService
+    FeesService,    MopService,    BicService,    SinginService,  AccountsService
   ],
   bootstrap: [AppComponent]
 })

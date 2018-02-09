@@ -3,6 +3,30 @@
 }
 
 .modal-bank{
-    background-color: green;
+    background-color: darkolivegreen;
     color: black;
+}
+
+.mny-btn{
+    margin-top: 15px;
+}
+
+.mny-input{
+    background-color:beige;
+    border-radius:5px;
+    padding: 10px 20px 20px 20px;
+}
+
+.btn-mny{
+    background-color: darkolivegreen;
+    color: white;
+}
+
+
+input:focus {
+    border: 0.5px solid darkolivegreen;
+}
+
+.sum-card{
+    background-color: beige;
 }

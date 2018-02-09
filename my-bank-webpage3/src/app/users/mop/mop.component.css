@@ -2,3 +2,15 @@
     margin-top: 25px;
 }
 
+.mop-div{
+    background-color:beige;
+    padding: 2px 20px 20px 20px;
+    border-radius:5px;
+}
+.fee-info-div{
+    background-color:beige;
+}
+
+.tab-grn{
+    color:darkolivegreen;
+}

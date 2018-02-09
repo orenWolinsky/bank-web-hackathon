@@ -1,0 +1,16 @@
+.sign-in-box{
+    background-color:beige;
+    border-radius:5px;
+    padding: 2px 20px 20px 20px;
+    margin-top: 100px;
+}
+
+.login-btn{
+    background-color: darkolivegreen;
+    color: white;
+}
+input:focus {
+    border: 0.5px solid darkolivegreen;
+}
+
+

@@ -44,7 +44,6 @@ export class MopComponent implements OnInit {
     });
     
     this._mopService.mopSubject.subscribe((arr:boolean[])=>{
-      console.log('subscribed to mop service blocking options' + arr);
       this.immdt_btn.setActivation(arr[0]);
       this.urg_btn.setActivation(arr[1]);
       this.nUrg_btn.setActivation(arr[2]);

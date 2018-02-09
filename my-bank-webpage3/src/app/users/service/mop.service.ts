@@ -6,30 +6,51 @@ import {Observer} from "rxjs/Observer"
 
 export class MopService{
 
-    private str:string = "";
     public mopSubject:Subject<boolean[]> = new Subject();
-    public mopOptionsArr:boolean[] = [];
-    //all product actions are here
-    private curr:string = "Current";
+    public mopOptionsArr:boolean[] = [];  
     public accList:string[] = ["Current","Savings","Expenses"];
+    public france:string = "FRANCE";
+    public israel:string = "ISRAEL";
+    public usa:string = "USA";
+    public brazil:string = "BRAZIL";
+    public unknown:string = "unkown";
     //have a map of key - string and value - array of 3 booleans, return array of booleans based on the selected product
-
     public blockOptions(product:string){
 
-        console.log(`block options is on recived: ${product}`);
-        this.str = product;
+        // console.log(`block options is on recived: on ${product}`);
         this.mopOptionsArr = [];
         
-        if(product === this.curr){
+        if(product === this.france){
             this.mopOptionsArr.push(true);
             this.mopOptionsArr.push(true);
+            this.mopOptionsArr.push(false);
+        }
+        else if(product === this.israel){
+            this.mopOptionsArr.push(true);
+            this.mopOptionsArr.push(false);
+            this.mopOptionsArr.push(true);
+        }
+        else if(product === this.usa){
+            this.mopOptionsArr.push(true);
+            this.mopOptionsArr.push(false);
+            this.mopOptionsArr.push(true);
+        }
+        else if(product === this.brazil){
+            this.mopOptionsArr.push(true);
+            this.mopOptionsArr.push(false);
+            this.mopOptionsArr.push(true);
+        }
+        else if(product === this.unknown){
+            this.mopOptionsArr.push(false);
+            this.mopOptionsArr.push(false);
             this.mopOptionsArr.push(false);
         }
         else{
             this.mopOptionsArr.push(true);
-            this.mopOptionsArr.push(false);
+            this.mopOptionsArr.push(true);
             this.mopOptionsArr.push(true);
         }
+        
         this.mopSubject.next(this.mopOptionsArr);
     }
 
