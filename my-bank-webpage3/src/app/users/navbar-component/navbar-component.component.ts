@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ViewChild } from '@angular/core/src/metadata/di';
 
 @Component({
   selector: 'app-navbar-component',
@@ -7,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponentComponent implements OnInit {
 
-  public user:string = "oren";
+  public login = "Login";
+  public user:string = "User";
 
   constructor() { }
 

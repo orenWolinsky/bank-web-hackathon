@@ -7,7 +7,7 @@
         <button class="btn btn-primary dropdown-toggle btn-block" dropdown-open type="button" >{{myAccounts}}
         <span class="caret"></span></button>
         <ul class="dropdown-menu" >
-          <li><a href="#"  *ngFor="let acc of accList" (click)="setChoosenAccount($event)">{{acc}}</a></li>
+          <li><a *ngFor="let acc of accList" (click)="setChoosenAccount($event)">{{acc}}</a></li>
         </ul>
       </div>
   </div>

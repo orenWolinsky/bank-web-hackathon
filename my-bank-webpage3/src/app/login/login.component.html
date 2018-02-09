@@ -1,3 +1,43 @@
-<p>
-  login works!
-</p>
+<app-navbar-component></app-navbar-component>
+<app-jambatron></app-jambatron>
+
+<div class="alert alert-success text-center" *ngIf="isVisible">
+    <strong>Login Success!</strong>
+</div>
+
+<div class="alert alert-danger text-center" *ngIf="isVisible2">
+    <strong>Login Failed!</strong>
+</div>
+
+
+<div class="container" >
+  <div class="row">
+    <div class="col-sm-4 ">
+
+    </div>
+    <div class="col-sm-4">  
+
+        <form class="form-signin">
+            <h2 class="form-signin-heading text-center">Sign In</h2>
+            
+            
+            <input name="user" type="text" class="form-control" placeholder="User Name" required autofocus [(ngModel)]="userName" >
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input name="pswd" type="password" class="form-control" placeholder="Password" required [(ngModel)]="password" >
+            
+            <div class="checkbox">
+              <label><input type="checkbox" value="remember-me"> Remember me</label>
+            </div>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit"  (click)="login()" >Sign in</button>
+        </form>
+
+    </div>
+    <div class="col-sm-4 ">
+
+    </div>
+  </div>
+  
+  
+  
+</div>

@@ -5,6 +5,7 @@ import {MopService} from "../service/mop.service";
 import { FeesService } from '../service/fees.service';
 import { BicService } from '../service/bic.service';
 import { NgForm, NgModel } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-money-transfer',
@@ -23,7 +24,7 @@ export class MoneyTransferComponent implements OnInit {
   public isVisible2:boolean = false;
   public calculate_fees_disable:string ="disabled";
 
-  constructor(private _mopService:MopService,private _feeService:FeesService,private _bicService:BicService) {
+  constructor(private _mopService:MopService,private _feeService:FeesService,private _bicService:BicService, private _router: Router) {
 
     this.accList = this._mopService.accList;
 
@@ -35,6 +36,7 @@ export class MoneyTransferComponent implements OnInit {
   setChoosenAccount(event){
     this.myAccounts = event.target.text;
     this._mopService.blockOptions(this.myAccounts);
+    console.log('account choosen ' + this.myAccounts);
   }
 
   public bicCal(){
@@ -68,6 +70,8 @@ export class MoneyTransferComponent implements OnInit {
   }
 
   refresh(): void {
+    console.log('Payment finished, reloading page');
     window.location.reload();
+    this._router.navigateByUrl('/sheep');
   }
 }
