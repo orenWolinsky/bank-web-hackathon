@@ -87,7 +87,7 @@ export class MoneyTransferComponent implements OnInit {
 
   refresh(): void {
     console.log('Payment finished, reloading page');
-    window.location.reload();
+    //window.location.reload();
     this._router.navigateByUrl('/sheep');
   }
 }
