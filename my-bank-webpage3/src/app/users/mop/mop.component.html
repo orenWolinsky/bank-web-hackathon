@@ -20,7 +20,7 @@
 
 
 
-<div class="panel panel-default block-fee-info fee-info-div" *ngIf="isVisible">
+<div class="panel panel-default block-fee-info fee-info-div" *ngIf="isVisible" (click)="setChoosenFees($event)">
 
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#sha" class="tab-grn">SHA</a></li>
@@ -29,7 +29,7 @@
       </ul>
       
       <div class="tab-content fee-info-div">
-        <div id="sha" class="tab-pane fade in active ">
+        <div id="sha" class="tab-pane fade in active">
             <div class="panel-body fee-info-div" (dblclick)="closeScreen()">Shared {{titleFeeBox}} fees</div>
             <div class="panel-footer fee-info-div">12% tax</div>
             <div class="panel-footer fee-info-div">55% bank tax</div>
@@ -41,7 +41,7 @@
             <div class="panel-footer fee-info-div">500% bank tax</div>
             <div class="panel-footer fee-info-div">545% country tax</div>
         </div>
-        <div id="our" class="tab-pane fade">
+        <div id="our" class="tab-pane fade" >
             <div class="panel-body" (dblclick)="closeScreen()">Our {{titleFeeBox}} fees</div>
             <div class="panel-footer fee-info-div">12% tax</div>
             <div class="panel-footer fee-info-div">2545% bank tax</div>

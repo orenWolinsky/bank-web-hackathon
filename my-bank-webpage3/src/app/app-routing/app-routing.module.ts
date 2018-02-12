@@ -18,6 +18,7 @@ import { SheepComponent } from '../users/sheep/sheep.component';
             {path: 'accounts', component: AccountsComponent}, 
             {path: 'home', component: HomeComponent},
             {path: 'sheep', component: SheepComponent},
+            {path: 'mop', component: MopComponent},
         ])
     ],
     exports: [RouterModule]

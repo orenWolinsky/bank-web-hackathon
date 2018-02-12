@@ -56,16 +56,8 @@ export class MopComponent implements OnInit {
 
 
 
-  public startCalculatingFees(info:TransferInfo){
-
-    // this._feeService.getFeesCalculation(info).subscribe((fees: string[]) => {
-    //   this.immidiateFee = fees[0] +this.currency;
-    //   this.directDebitFee = fees[1] +this.currency;
-    //   this.loanFee = fees[2] + this.currency;
-    //   this.sheepFee = fees[3] + this.currency;
-    //   console.log(fees);
-    // });
-    
+  setChoosenFees(event){
+    console.log('choose fee' + event.target.text);
   }
 
   public showScreenBelow(event){
