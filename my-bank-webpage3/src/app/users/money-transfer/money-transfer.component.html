@@ -16,17 +16,17 @@
   <div class="form-group">
     <label for="pwd">Choose Amount:</label>  
     <div class="input-group"> 
-      <span class="input-group-addon">
-      <div class="dropdown"  dropdown [dropdownToggle]="true" >
-        <button class="" dropdown-open type="button" >$</button>
-        <ul class="dropdown-menu" >
-          <li>$</li>
-          <li>&euro;</li>
-          <li>&#8356;</li> 
-          <li>&#8377;</li> 
-        </ul>
-      </div></span>
       <input type="number" name="amt" value="100.00" min="0" step="0.50" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" id="c2"  [(ngModel)]="amount" />
+      <span class="input-group-addon">
+        <div class="dropdown"  dropdown [dropdownToggle]="true" >
+          <button class="btn-mny" dropdown-open type="button" >$</button>
+          <ul class="dropdown-menu" >
+            <li>$</li>
+            <li>&euro;</li>
+            <li>&#8356;</li> 
+            <li>&#8377;</li> 
+          </ul>
+        </div></span>
     </div> 
   </div>
 
