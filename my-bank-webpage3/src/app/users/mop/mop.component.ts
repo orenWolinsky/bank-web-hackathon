@@ -64,7 +64,7 @@ export class MopComponent implements OnInit {
     
     const text:string = event.target.textContent;
     const notBlocked:boolean = this.isblocked(event.target.textContent);
-
+    console.log(event.target.textContent);
     if(notBlocked){
       this.titleFeeBox = text;
     }
@@ -83,6 +83,7 @@ export class MopComponent implements OnInit {
   }
 
   private isblocked(title:string):boolean{
+    //debugger;
     if(title.includes(this.urg_btn.mopName)){
       return this.urg_btn.isActive();
     }

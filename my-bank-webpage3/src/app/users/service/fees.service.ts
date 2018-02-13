@@ -8,6 +8,7 @@ import { inject } from '@angular/core/testing';
 import {TransferInfo} from "../json/transferInfo.json";
 import { Subject } from 'rxjs/Subject';
 import { MoneyTransfer } from '../class/moneyTransfering';
+import { Stub } from '../json/stubTask.json';
 
 @Injectable()
 export class FeesService{
@@ -20,10 +21,15 @@ export class FeesService{
     public startFeesCalculation(info:TransferInfo): Observable<any[]> {
         console.log(info);
         
-        return this._httpService.get<any[]>('https://nztodo.herokuapp.com/api/task/?format=json', {
+        return this._httpService.get<Stub[]>('https://nztodo.herokuapp.com/api/task/?format=json', {
             observe: 'response',
         })
-            .map((res: HttpResponse<any[]>) => {
+            .map((res: HttpResponse<Stub[]>) => {
+                const i:Stub = res.body[1] as Stub;
+                console.log(res.body[1]);
+                console.log(i.description);
+                // console.log(res.body[1].title); //playing with incoming json
+                // console.log(res.body[1]);
                 this.strArr = ["4.50","5.50","3.0"];
                 this.feesSubject.next(this.strArr);
                 return this.strArr;

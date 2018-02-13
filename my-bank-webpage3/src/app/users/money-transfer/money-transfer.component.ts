@@ -1,4 +1,4 @@
-import { Component, OnInit ,Input,Output, ViewChild} from '@angular/core';
+import { Component, OnInit ,Input,Output, ViewChild,AfterViewChecked } from '@angular/core';
 import {DropdownModule} from "ng2-dropdown";
 import {TransferInfo} from "../json/transferInfo.json";
 import {MopService} from "../service/mop.service";
@@ -8,6 +8,7 @@ import { NgForm, NgModel } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MoneyTransfer } from '../class/moneyTransfering';
 import { AccountsService } from '../service/accounts.service';
+//declare var $: any;
 
 @Component({
   selector: 'app-money-transfer',
