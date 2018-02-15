@@ -40,8 +40,8 @@
       </div>
   </div>
 
-  <!-->calculate and transfer button<-->
-  <button type="button" class="btn btn-mny btn-block {{calculate_fees_disable}}" (click)="calculateFees()">Calculate Fees Options</button>
+  <!-->calculate and transfer button {{calculate_fees_disable}} in class<-->
+  <button type="button" class="btn btn-mny btn-block " (click)="calculateFees()">Calculate Fees Options</button>
   <button id="openModalButton" [hidden]="true" data-toggle="modal" data-target="#wrongInput">Open Modal</button>
   <button type="button" class="btn btn-mny btn-block mny-btn" *ngIf="isVisible" (click)="sumerrize()">Transfer Money</button>
 

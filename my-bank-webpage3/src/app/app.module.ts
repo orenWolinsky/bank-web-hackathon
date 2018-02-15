@@ -21,6 +21,7 @@ import { HomeComponent } from './users/home/home.component';
 import { SheepComponent } from './users/sheep/sheep.component';
 import { SinginService } from './users/service/singin.service';
 import { AccountsService } from './users/service/accounts.service';
+import { HttpModule } from '@angular/http';
 // import { UsersModule } from './users/users.module';
 
 
@@ -30,7 +31,7 @@ import { AccountsService } from './users/service/accounts.service';
     TransferComponent,    Navbar2Component,    AccountsComponent,    HomeComponent,    SheepComponent
     ],
   imports: [
-    BrowserModule,    DropdownModule,    FormsModule,    HttpClientModule,    AppRoutingModule,
+    BrowserModule,    DropdownModule,    FormsModule,    HttpClientModule,    AppRoutingModule, HttpModule
     //UsersModule,
   ],
   providers: [

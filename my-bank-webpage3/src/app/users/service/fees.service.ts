@@ -9,47 +9,40 @@ import {TransferInfo} from "../json/transferInfo.json";
 import { Subject } from 'rxjs/Subject';
 import { MoneyTransfer } from '../class/moneyTransfering';
 import { Stub } from '../json/stubTask.json';
+import { HttpHeaderResponse } from '@angular/common/http/src/response';
+import { HttpModule, Http, RequestOptions } from '@angular/http';
 
 @Injectable()
 export class FeesService{
 
     public feesSubject:Subject<string[]> = new Subject();//should be array of feejsons //try working with task json
     public strArr: string[];
-    public json:string = `{
-        "localoffice" : "FIN",
-        "bdDebitamount" : 10,
-        "bdCreditamount" : 10,
-        "creditCurrency" : "EUR",
-      }`;
-    
-    public par = new HttpParams();
-    constructor(private _httpService: HttpClient) {}
+    public url:string = "http://192.168.173.143:8080/CrunchifyTutorials/api/crunchifyService";
 
-    public startFeesCalculation(info:TransferInfo): Observable<any[]> {
+    public json2:TransferInfo = new TransferInfo("FIN","10","10","EUR");
+    public par = new HttpParams();
+    constructor(private _http:Http) {}
+
+    /**
+     * use post request to URL fee calculation with json request TransferInfo and suppose to get a json for response
+     * @param info 
+     */
+    public startFeesCalculation(info:TransferInfo): Observable<string[]> {
         console.log(info);
-        let param:HttpParams = new HttpParams().set("localoffice","FIN").append("bdDebitamount","10").append("bdCreditamount","10").append("creditCurrency","EUR");
-        let head:HttpHeaders = new HttpHeaders()
-        .set("Access-Control-Allow-Headers","X-Requested-With,Content-Type")
-        .append("Access-Control-Allow-Methods","GET")
-        //.append("Access-Control-Allow-Origin","*")
-        .append("Access-Control-Allow-Origin","http://192.168.173.143:8080");
-//http://192.168.173.143:8080/CrunchifyTutorials/api/verify
-        return this._httpService.get('http://192.168.173.143:8080/CrunchifyTutorials/api/oren', {  //'https://nztodo.herokuapp.com/api/task/?format=json' 'http://192.168.169.59:8888/myapp/api/calculateFees'
-            observe: 'response',
-            //headers: head,
-            //params: param
-        })
-            .map((res) => {
-                console.log(res);
-                // const i:Stub = res.body[1] as Stub;
-                // console.log(res.body[1]);
-                // console.log(i.description);
-                // console.log(res.body[1].title); //playing with incoming json
-                // console.log(res.body[1]);
-                this.strArr = ["4.50","5.50","3.0"];
-                this.feesSubject.next(this.strArr);
-                return this.strArr;
-            })
+
+        console.log(this.json2);
+        console.log(this.json2.toString());
+        return this._http.post(this.url,JSON.stringify(this.json2)).map((res=>{
+            console.log("response is recived");
+            console.log(JSON.parse(res._body));
+            let j:TransferInfo = JSON.parse(res._body);
+            
+            console.log(j);            
+            console.log(j.localoffice);
+            return this.strArr;
+        }));
+
+        
     }
 
 

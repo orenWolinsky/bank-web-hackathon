@@ -63,22 +63,26 @@ export class MoneyTransferComponent implements OnInit {
 
 
   calculateFees(){
-    
-    let money:MoneyTransfer = new MoneyTransfer(this.myAccounts,this.amount,this.bic);
-    
-    if(this._feeService.isTransferInputValid(money)){
-    
-      console.log(`Starting fee calculation for account ${this.myAccounts} amount ${this.amount} and bic ${this.bic}`);
-      this.isVisible = true;
-      this.calculate_fees_disable = "disabled";
 
-      this._feeService.startFeesCalculation(null).subscribe((fees:string[])=>{
-        console.log('started fee calculation '+fees);
-      });  
-    }else{
-      console.log('error cannot transfer money');
-      document.getElementById("openModalButton").click();
-    }
+    this._feeService.startFeesCalculation(null).subscribe((fees:string[])=>{
+      console.log('started fee calculation '+fees);
+    });
+
+    // let money:MoneyTransfer = new MoneyTransfer(this.myAccounts,this.amount,this.bic);
+    
+    // if(this._feeService.isTransferInputValid(money)){
+    
+    //   console.log(`Starting fee calculation for account ${this.myAccounts} amount ${this.amount} and bic ${this.bic}`);
+    //   this.isVisible = true;
+    //   this.calculate_fees_disable = "disabled";
+
+    //   // this._feeService.startFeesCalculation(null).subscribe((fees:string[])=>{
+    //   //   console.log('started fee calculation '+fees);
+    //   // });  
+    // }else{
+    //   console.log('error cannot transfer money');
+    //   document.getElementById("openModalButton").click();
+    // }
   }
 
   sumerrize(){
