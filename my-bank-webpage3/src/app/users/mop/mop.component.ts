@@ -1,6 +1,5 @@
 import { Component, OnInit ,Input,Output,EventEmitter} from '@angular/core';
 import {FeesService} from "../service/fees.service";
-import {TransferInfo} from "../json/transferInfo.json";
 import {MopService} from "../service/mop.service";
 import { ChangeDetectorRef } from '@angular/core';
 
@@ -51,22 +50,24 @@ export class MopComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
 
 
 
   setChoosenFees(event){
-    console.log('choose fee' + event.target.text);
+    console.log('choose fee ' + event.target.text);
+    this._feeService.setFeePart(event.target.text);
   }
 
   public showScreenBelow(event){
-    
     const text:string = event.target.textContent;
-    const notBlocked:boolean = this.isblocked(event.target.textContent);
-    console.log(event.target.textContent);
+    const notBlocked:boolean = this.isblocked(text);
+    console.log(text);
     if(notBlocked){
       this.titleFeeBox = text;
+      this._feeService.setProduct(text);
     }
 
     if(!this.isVisible && !notBlocked){
