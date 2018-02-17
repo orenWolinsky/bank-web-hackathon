@@ -7,9 +7,10 @@ export class SinginService{
     public obj:Map<string,string> = new Map<string,string>();
 
     constructor(){
-        this.obj.set("orenwol","dd");
-        this.obj.set("eyalrg","abc123");
-        this.obj.set("admin15","abc123");
+        this.obj.set("orenw","dd");
+        this.obj.set("eyalr","abc123");
+        this.obj.set("zachik","abc123");
+        this.obj.set("idano","abc123");
     }
     public validateSign(user:string,pass:string):boolean{
 

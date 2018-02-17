@@ -63,14 +63,14 @@ export class MopComponent implements OnInit {
 
   public showScreenBelow(event){
     const text:string = event.target.textContent;
-    const notBlocked:boolean = this.isblocked(text);
+    const isBlocked:boolean = this.isblocked(event.target.className);
     console.log(text);
-    if(notBlocked){
+    if(!isBlocked){
       this.titleFeeBox = text;
       this._feeService.setProduct(text);
     }
 
-    if(!this.isVisible && !notBlocked){
+    if(!this.isVisible && isBlocked){
       this.isVisible = false;  
     }
     else{
@@ -85,14 +85,8 @@ export class MopComponent implements OnInit {
 
   private isblocked(title:string):boolean{
     //debugger;
-    if(title.includes(this.urg_btn.mopName)){
-      return this.urg_btn.isActive();
-    }
-    else if(title.includes(this.immdt_btn.mopName)){
-      return this.immdt_btn.isActive();
-    }
-    else if(title.includes(this.nUrg_btn.mopName)){
-      return this.nUrg_btn.isActive();
+    if(title.includes("disabled")){
+      return true;
     }
     return false;
   }
@@ -115,9 +109,6 @@ class MOPOption{
     this.mop_btn_active = actv;
   }
 
-  isActive():boolean{
-    return (this.mop_btn_active === this.active) ? true:false;
-  }
 
   public setActivation(bol:boolean){
     if(bol){
