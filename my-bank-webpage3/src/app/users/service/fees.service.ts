@@ -21,6 +21,7 @@ export class FeesService{
 
     public par = new HttpParams();
     private data:MoneyTransferData = new MoneyTransferData();
+    private feeIncoming:FeeIncomingInfo = new FeeIncomingInfo();
 
     constructor(private _http:Http) {}
 
@@ -34,33 +35,44 @@ export class FeesService{
         let json:string = this.genteratePostJson(info);
         console.log(json);
 
+        setTimeout(() => {
+        this.setMockService();
+        this.feesSubject.next(this.feeIncoming);    
+        }, 1000);
+
         return this._http.post(this.url,JSON.stringify(json)).map((res)=>{
             console.log("response is recived");
             console.log(res);
             
-            console.log(JSON.parse(res._body)); //here parsing the incmoing response
+            //console.log(JSON.parse(res._body)); //here parsing the incmoing response
             
             //now just mocking the response info
-            let feeIncoming:FeeIncomingInfo = new FeeIncomingInfo();
-            feeIncoming.immidiateFee = 2.5+1;
-            feeIncoming.immidiateBaseFee = 2.5;
-            feeIncoming.immidiateTaxFee = 1;
+            this.setMockService();
 
-            feeIncoming.nonUrgentFee = 2.0+0.5;
-            feeIncoming.nonUrgentBaseFee = 2.0; 
-            feeIncoming.nonUrgentTaxFee = 0.5;
+            this.feesSubject.next(this.feeIncoming);
+            return this.feeIncoming;
+        },
+        (err)=>{
+            console.log('error in response');
+        }
+    );
 
-            feeIncoming.urgentFee = 3.0+1.3
-            feeIncoming.urgentBaseFee = 3.0
-            feeIncoming.urgentTaxFee = 1.3
-
-            this.feesSubject.next(feeIncoming);
-            return feeIncoming;
-        });
-
-        
     }
 
+    private setMockService(){
+        this.feeIncoming.immidiateFee = 2.5+1;
+        this.feeIncoming.immidiateBaseFee = 2.5;
+        this.feeIncoming.immidiateTaxFee = 1;
+
+        this.feeIncoming.nonUrgentFee = 2.0+0.5;
+        this.feeIncoming.nonUrgentBaseFee = 2.0; 
+        this.feeIncoming.nonUrgentTaxFee = 0.5;
+
+        this.feeIncoming.urgentFee = 3.0+1.3
+        this.feeIncoming.urgentBaseFee = 3.0
+        this.feeIncoming.urgentTaxFee = 1.3
+
+    }
 
     private genteratePostJson(data:MoneyTransferData):string{
         let json:string = `
