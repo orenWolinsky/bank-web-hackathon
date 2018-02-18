@@ -22,6 +22,7 @@ import { SheepComponent } from './users/sheep/sheep.component';
 import { SinginService } from './users/service/singin.service';
 import { AccountsService } from './users/service/accounts.service';
 import { HttpModule } from '@angular/http';
+import { CurrencyService } from './users/service/currency.service';
 // import { UsersModule } from './users/users.module';
 
 
@@ -35,7 +36,7 @@ import { HttpModule } from '@angular/http';
     //UsersModule,
   ],
   providers: [
-    FeesService,    MopService,    BicService,    SinginService,  AccountsService
+    FeesService,    MopService,    BicService,    SinginService,  AccountsService,CurrencyService
   ],
   bootstrap: [AppComponent]
 })

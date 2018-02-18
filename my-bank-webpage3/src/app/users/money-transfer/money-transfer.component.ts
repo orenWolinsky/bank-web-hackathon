@@ -7,6 +7,8 @@ import { NgForm, NgModel } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MoneyTransferData } from '../class/moneyTransfering';
 import { AccountsService } from '../service/accounts.service';
+import { FeeIncomingInfo } from '../class/feeIncomingInfo';
+import { CurrencyService } from '../service/currency.service';
 //declare var $: any;
 
 @Component({
@@ -18,6 +20,7 @@ export class MoneyTransferComponent implements OnInit {
   @ViewChild('ngFormInstance') public ngFormInstance: NgForm;
   @ViewChild('ngFormInstance') public bicNgModel: NgModel;
  
+  public feeData:FeeIncomingInfo = new FeeIncomingInfo();
   public accList:string[] = [];
   public currencyList:string[]=[];
 
@@ -27,12 +30,26 @@ export class MoneyTransferComponent implements OnInit {
   public wrongInput:string = "";
   public transferInfo:MoneyTransferData = new MoneyTransferData();
 
-  constructor(private _mopService:MopService,private _feeService:FeesService,private _bicService:BicService, private _router: Router,private _acct:AccountsService) {
+  constructor(private _mopService:MopService,
+              private _feeService:FeesService,
+              private _bicService:BicService,
+              private _router: Router,
+              private _acct:AccountsService,
+              private _currencyService:CurrencyService) {
+
     this.transferInfo.amount = 100;
     this.accList = this._acct.accList;
     this.currencyList = this._acct.currencyList;
     this.transferInfo.account = this._acct.defult;
+    
     this.transferInfo.currency = this.currencyList[0];
+
+    this._feeService.feesSubject.subscribe((fee:FeeIncomingInfo)=>{
+      console.log("subscribed to fee service and recived fee " + fee);
+      this.feeData = fee;
+      
+    });
+
   }
 
   ngOnInit() {
@@ -45,6 +62,7 @@ export class MoneyTransferComponent implements OnInit {
 
   setChoosenCurrency(event){
     this.transferInfo.currency = event.target.text;
+    this._currencyService.updateCurrency(this.transferInfo.currency);
     console.log('Currency choosen ' + this.transferInfo.currency);
   }
 
@@ -75,7 +93,7 @@ export class MoneyTransferComponent implements OnInit {
       this.calculate_fees_disable = "disabled";
 
    
-      this._feeService.startFeesCalculation(this.transferInfo).subscribe((fees:string[])=>{
+      this._feeService.startFeesCalculation(this.transferInfo).subscribe((fees:FeeIncomingInfo)=>{
         console.log('started fee calculation '+fees);
       });
     
@@ -97,6 +115,7 @@ export class MoneyTransferComponent implements OnInit {
     }else{
       this.transferInfo.total = this.transferInfo.amount;
       this.isVisible2 = true;
+      document.getElementById("openModalButton3").click();
     }    
   }
 

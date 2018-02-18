@@ -2,7 +2,6 @@
 export class FeeResult {
 
 
-
     constructor(public feesResultsFull) {
         
     }
@@ -12,7 +11,7 @@ export class FeeResult {
 
 class FeesResultsFull{
 
-    
+
 
 
 }

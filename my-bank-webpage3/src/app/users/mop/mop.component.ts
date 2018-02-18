@@ -2,6 +2,8 @@ import { Component, OnInit ,Input,Output,EventEmitter} from '@angular/core';
 import {FeesService} from "../service/fees.service";
 import {MopService} from "../service/mop.service";
 import { ChangeDetectorRef } from '@angular/core';
+import { FeeIncomingInfo } from '../class/feeIncomingInfo';
+import { CurrencyService } from '../service/currency.service';
 
 @Component({
   selector: 'app-mop',
@@ -9,12 +11,9 @@ import { ChangeDetectorRef } from '@angular/core';
   styleUrls: ['./mop.component.css']
 })
 export class MopComponent implements OnInit {
-  public immidiateFee:string = "";
-  public directDebitFee:string = "";
-  public loanFee:string = "";
-  public sheepFee:string = "";
+  public feeData:FeeIncomingInfo = new FeeIncomingInfo();
 
-  public currency:string = "$";
+  public currency:string = "USD";
   public isVisible:boolean = false;
   public titleFeeBox:string;
   
@@ -31,23 +30,25 @@ export class MopComponent implements OnInit {
   public urgInfo:string = "Urgent tranfer will be done right away";
   public nUrgInfo:string = "Non urgent tranfer will not be urgent";
 
-  constructor(private _feeService:FeesService,private _mopService:MopService) { 
+  constructor(private _feeService:FeesService,
+              private _mopService:MopService,
+              private _currencyService:CurrencyService) { 
     
-    this._feeService.feesSubject.subscribe((arr:string[])=>{
-      console.log("subscribed to fee service and recived fee " + arr);
+        this._feeService.feesSubject.subscribe((fee:FeeIncomingInfo)=>{
+          console.log("subscribed to fee service and recived fee " + fee);
+          this.feeData = fee;
+        });
+        
+        this._mopService.mopSubject.subscribe((arr:boolean[])=>{
+          this.immdt_btn.setActivation(arr[0]);
+          this.urg_btn.setActivation(arr[1]);
+          this.nUrg_btn.setActivation(arr[2]);
+        });
 
-      this.immidiateFee = arr[0] +this.currency;
-      this.directDebitFee = arr[1] +this.currency;
-      this.loanFee = arr[2] + this.currency;
-
-    });
-    
-    this._mopService.mopSubject.subscribe((arr:boolean[])=>{
-      this.immdt_btn.setActivation(arr[0]);
-      this.urg_btn.setActivation(arr[1]);
-      this.nUrg_btn.setActivation(arr[2]);
-    });
-  }
+        this._currencyService.currencySubject.subscribe((cur:string)=>{
+          this.currency = cur;
+        });
+      } 
 
   ngOnInit() {
 
@@ -64,10 +65,11 @@ export class MopComponent implements OnInit {
   public showScreenBelow(event){
     const text:string = event.target.textContent;
     const isBlocked:boolean = this.isblocked(event.target.className);
-    console.log(text);
+    console.log(text); 
     if(!isBlocked){
       this.titleFeeBox = text;
       this._feeService.setProduct(text);
+      this.setBaseFeeWithRightData(event.target.className);
     }
 
     if(!this.isVisible && isBlocked){
@@ -95,6 +97,26 @@ export class MopComponent implements OnInit {
   public clickTab(event):void{
     console.log('pressed '+event.target.text);
     event.target.classList.add('active');
+  }
+
+  //nogt urgt imdt
+  private setBaseFeeWithRightData(mop:string){
+    if(mop.includes("nogt")){
+      this.feeData.productFee = this.feeData.nonUrgentFee;
+      this.feeData.productBaseFee = this.feeData.nonUrgentBaseFee;
+      this.feeData.productTaxFee = this.feeData.nonUrgentTaxFee;
+    }
+    else if(mop.includes("urgt")){
+      this.feeData.productFee = this.feeData.urgentFee;
+      this.feeData.productBaseFee = this.feeData.urgentBaseFee;
+      this.feeData.productTaxFee = this.feeData.urgentTaxFee;
+    }
+    else if(mop.includes("imdt")){
+      this.feeData.productFee = this.feeData.immidiateFee;
+      this.feeData.productBaseFee = this.feeData.immidiateBaseFee;
+      this.feeData.productTaxFee = this.feeData.immidiateTaxFee;
+    }
+
   }
 }
 

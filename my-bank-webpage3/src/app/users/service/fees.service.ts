@@ -10,11 +10,12 @@ import { MoneyTransferData } from '../class/moneyTransfering';
 import { Stub } from '../json/stubTask.json';
 import { HttpHeaderResponse } from '@angular/common/http/src/response';
 import { HttpModule, Http, RequestOptions } from '@angular/http';
+import { FeeIncomingInfo } from '../class/feeIncomingInfo';
 
 @Injectable()
 export class FeesService{
 
-    public feesSubject:Subject<string[]> = new Subject();//should be array of feejsons //try working with task json
+    public feesSubject:Subject<FeeIncomingInfo> = new Subject();//should be array of feejsons //try working with task json
     public strArr: string[];
     public url:string = "http://192.168.173.143:8080/CrunchifyTutorials/api/crunchifyService";
 
@@ -27,21 +28,35 @@ export class FeesService{
      * use post request to URL fee calculation with json request TransferInfo and suppose to get a json for response
      * @param info 
      */
-    public startFeesCalculation(info:MoneyTransferData): Observable<string[]> {
+    public startFeesCalculation(info:MoneyTransferData): Observable<FeeIncomingInfo> {
         console.log('starting with post fees calculation');
         console.log(info);
         let json:string = this.genteratePostJson(info);
         console.log(json);
 
-        return this._http.post(this.url,JSON.stringify(json)).map((res=>{
+        return this._http.post(this.url,JSON.stringify(json)).map((res)=>{
             console.log("response is recived");
-            //console.log(JSON.parse(res._body));
-            //let j:TransferInfo = JSON.parse(res._body);
+            console.log(res);
             
-            //console.log(j);            
-            //console.log(j.localoffice);
-            return this.strArr;
-        }));
+            console.log(JSON.parse(res._body)); //here parsing the incmoing response
+            
+            //now just mocking the response info
+            let feeIncoming:FeeIncomingInfo = new FeeIncomingInfo();
+            feeIncoming.immidiateFee = 2.5+1;
+            feeIncoming.immidiateBaseFee = 2.5;
+            feeIncoming.immidiateTaxFee = 1;
+
+            feeIncoming.nonUrgentFee = 2.0+0.5;
+            feeIncoming.nonUrgentBaseFee = 2.0; 
+            feeIncoming.nonUrgentTaxFee = 0.5;
+
+            feeIncoming.urgentFee = 3.0+1.3
+            feeIncoming.urgentBaseFee = 3.0
+            feeIncoming.urgentTaxFee = 1.3
+
+            this.feesSubject.next(feeIncoming);
+            return feeIncoming;
+        });
 
         
     }
@@ -68,6 +83,7 @@ export class FeesService{
         }
         return true;
     }
+
 
     public setProduct(prod:string){
         this.data.productFee = prod;

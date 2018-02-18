@@ -42,18 +42,19 @@
   <button id="openModalButton" [hidden]="true" data-toggle="modal" data-target="#wrongInput">Open Modal</button>
   <button type="button" class="btn btn-mny btn-block mny-btn" *ngIf="isVisible" (click)="sumerrize()">Transfer Money</button>
   <button id="openModalButton2" [hidden]="true" data-toggle="modal" data-target="#wrongFeeInput">Open Modal</button>
+  <button id="openModalButton3" [hidden]="true" data-toggle="modal" data-target="#sumrize">Open Modal</button>
 </form>
 
 
-<!-->total sumurize card  *ngIf="isVisible2"<-->
+<!-->total sumurize card  *ngIf="isVisible2"
 <div class="card well sum-all-card sum-card" style="width: 35rem;" *ngIf="isVisible">   
     <div class="card-block">
       <h4 class="card-title">Summarize Transaction</h4>
-      <p class="card-text">{{total}}</p>
+      <p class="card-text">{{transferInfo.total}}</p>
       <p class="card-text">sending over to SBSA</p>
       <a href="#" class="btn btn-mny btn-block"  data-toggle="modal" data-target="#myModal">Submit</a>
     </div>
-</div>
+</div><-->
 
 
 <!--end of transaction payment is starting! -->
@@ -110,3 +111,25 @@
       </div>
     </div>
   </div>
+
+  <!--end of transaction payment is starting! -->
+<div id="sumrize" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Summarize Transaction</h4>
+      </div>
+      <div class="modal-body">
+        <p>You are about to transfer money to {{transferInfo.bic}} from your {{transferInfo.account}} account</p>
+        <p>The sum of {{transferInfo.total}} {{transferInfo.currency}} + {{feeData.productFee}} {{transferInfo.currency}} = {{transferInfo.total+feeData.productFee}} {{transferInfo.currency}}</p>
+        <p><br><br><br>Press Confirm button to Complete transaction, or Cancel to cancel</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal" data-target="#myModal">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
