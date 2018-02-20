@@ -26,9 +26,9 @@ export class MopComponent implements OnInit {
 
   public Content:string;
 
-  public imdtInfo:string = "Immidate tranfer, will be done by end of day";
-  public urgInfo:string = "Urgent tranfer will be done right away";
-  public nUrgInfo:string = "Non urgent tranfer will not be urgent";
+  public imdtInfo:string = "Transfer money right away";
+  public urgInfo:string = "Tranfer will be done at end of business day";
+  public nUrgInfo:string = "Tranfer will be done in two business day";
 
   constructor(private _feeService:FeesService,
               private _mopService:MopService,
