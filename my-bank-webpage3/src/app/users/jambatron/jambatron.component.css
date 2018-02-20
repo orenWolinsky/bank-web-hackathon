@@ -10,10 +10,12 @@ h1{
     font-weight: bold;
     font-size: 100px
 }
+
 p{
     font-weight: bold;
     font-size: 25px
 }
+
 .ss{
     width:1000px;
     border-bottom: 5px solid black;

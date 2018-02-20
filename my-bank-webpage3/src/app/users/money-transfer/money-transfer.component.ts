@@ -19,14 +19,17 @@ import { CurrencyService } from '../service/currency.service';
 export class MoneyTransferComponent implements OnInit {
   @ViewChild('ngFormInstance') public ngFormInstance: NgForm;
   @ViewChild('ngFormInstance') public bicNgModel: NgModel;
- 
+  @ViewChild('ngFormInstance') public accNumModel: NgModel;
+
   public feeData:FeeIncomingInfo = new FeeIncomingInfo();
   public accList:string[] = [];
   public currencyList:string[]=[];
-
+  public has_error:string = "";
   public isVisible:boolean = false;
   public isVisible2:boolean = false;
   public calculate_fees_disable:string ="disabled";
+  public transfer_money_disable:string = "disabled";
+
   public wrongInput:string = "";
   public transferInfo:MoneyTransferData = new MoneyTransferData();
 
@@ -39,7 +42,7 @@ export class MoneyTransferComponent implements OnInit {
 
     this.transferInfo.amount = 100;
     this.accList = this._acct.accList;
-    this.currencyList = this._acct.currencyList;
+    this.currencyList = this._currencyService.currencyList;
     this.transferInfo.account = this._acct.defult;
     
     this.transferInfo.currency = this.currencyList[0];
@@ -67,29 +70,47 @@ export class MoneyTransferComponent implements OnInit {
   }
 
   public bicCal(){
-    if(this.bicNgModel.control.status === 'VALID'){
-      this.calculate_fees_disable = "";
-    }else{
-      this.calculate_fees_disable = "disabled";
-    }
-    console.log(this.bicNgModel.control.status);
+
+    this.calculate_fees_disable = "";
+    
     this.transferInfo.bic = this._bicService.autoComplete(this.transferInfo.bic);
+    this.transferInfo.bankName = this._bicService.nameComplete(this.transferInfo.bic);
     this.transferInfo.country = this._bicService.retriveCountryFromBic(this.transferInfo.bic);
     if(this.transferInfo.country !== undefined){
       console.log('retrived country from bic '+this.transferInfo.country);
         this._mopService.blockOptions(this.transferInfo.country);
     }
+
+    
+    this.has_error = "";
+    this.isVisible = false;
   }
+
+  
   
 
 
   calculateFees(){
+    //if button is blocked then don't press the button
+    debugger;
+    if(this.calculate_fees_disable === "disabled"){
+      return;
+    }
 
-    
+    console.log(this.transferInfo.bankName);
+    if(this.transferInfo.bankName === undefined){
+      this.has_error = "has-error";
+      this.isVisible = true;
+    }else{
+      this.has_error = "";
+      this.isVisible = false;
+    }
+
     if(this._feeService.isTransferInputValid(this.transferInfo)){
     
       console.log(`Starting fee calculation for account ${this.transferInfo.account} amount ${this.transferInfo.amount} and bic ${this.transferInfo.bic}`);
-      this.isVisible = true;
+      
+      this.transfer_money_disable = "";
       this.calculate_fees_disable = "disabled";
 
    

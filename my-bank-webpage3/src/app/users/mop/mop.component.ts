@@ -12,7 +12,7 @@ import { CurrencyService } from '../service/currency.service';
 })
 export class MopComponent implements OnInit {
   public feeData:FeeIncomingInfo = new FeeIncomingInfo();
-
+  
   public currency:string = "USD";
   public isVisible:boolean = false;
   public titleFeeBox:string;
@@ -21,8 +21,8 @@ export class MopComponent implements OnInit {
   private active:string = "active";
 
   public immdt_btn:MOPOption = new MOPOption("Immidiate",this.active);;
-  public urg_btn:MOPOption = new MOPOption("Urgent",this.active);
-  public nUrg_btn:MOPOption = new MOPOption("Non Urgent",this.active);
+  public urg_btn:MOPOption = new MOPOption("Same Day (Urgent)",this.active);
+  public nUrg_btn:MOPOption = new MOPOption("Two Days Delivery",this.active);
 
   public Content:string;
 
@@ -37,6 +37,8 @@ export class MopComponent implements OnInit {
         this._feeService.feesSubject.subscribe((fee:FeeIncomingInfo)=>{
           console.log("subscribed to fee service and recived fee " + fee);
           this.feeData = fee;
+          this.validateFeeToShow();
+          
         });
         
         this._mopService.mopSubject.subscribe((arr:boolean[])=>{
@@ -118,11 +120,27 @@ export class MopComponent implements OnInit {
     }
 
   }
+
+  private validateFeeToShow(){
+    if(this.nUrg_btn.mop_btn_active === "disabled"){
+      this.feeData.nonUrgentFee = undefined;
+      this.nUrg_btn.mopNA = "N/A";
+    }
+    else if(this.immdt_btn.mop_btn_active === "disabled"){
+      this.feeData.immidiateFee = undefined;
+      this.immdt_btn.mopNA = "N/A";
+    }
+    else if(this.urg_btn.mop_btn_active === "disabled"){
+      this.feeData.urgentFee = undefined;
+      this.urg_btn.mopNA = "N/A";
+    }
+  }
 }
 
 class MOPOption{
   public mopName:string;
   public mop_btn_active:string;
+  public mopNA:string = "";
   private disabled:string = "disabled";
   private active:string = "active";
 

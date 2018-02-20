@@ -1,48 +1,82 @@
 <form action="/action_page.php" #ngFormInstance="ngForm" class="mny-input">
  
-  <!-->customer account input<-->
-  <div class="form-group" >
-      <label for="email">Choose Your Account:</label>      
-      <div class="dropdown"  dropdown [dropdownToggle]="true" >
-        <button class="btn btn-mny dropdown-toggle btn-block" dropdown-open type="button" >{{transferInfo.account}}
-        <span class="caret"></span></button>
-        <ul class="dropdown-menu" >
-          <li><a *ngFor="let acc of accList" (click)="setChoosenAccount($event)">{{acc}}</a></li>
-        </ul>
-      </div>
-  </div>
-
-  <!-->amount input<-->
-  <div class="form-group">
-    <label for="pwd">Choose Amount:</label>  
-    <div class="input-group"> 
-      <input type="number" name="amt" value="100.00" min="0" step="0.50" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" id="c2"  [(ngModel)]="transferInfo.amount" />
-      <span class="input-group-addon">
+    <!-->customer account input<-->
+    <div class="form-group" >
+        <label for="email">Choose Your Account</label>      
         <div class="dropdown"  dropdown [dropdownToggle]="true" >
-          <button class="btn-mny" dropdown-open type="button" >{{transferInfo.currency}}</button>
+          <button class="btn btn-mny dropdown-toggle btn-block" dropdown-open type="button" >{{transferInfo.account}}
+            <span class="caret"></span></button>
           <ul class="dropdown-menu" >
-            <li><a *ngFor="let currency of currencyList" (click)="setChoosenCurrency($event)">{{currency}}</a></li>
+            <li><a *ngFor="let acc of accList" (click)="setChoosenAccount($event)">{{acc}}</a></li>
           </ul>
-        </div></span>
-    </div> 
-  </div>
+        </div>
+    </div>
 
-  <!-->debtor account bic input<-->
-  <div class="form-group ">
-      <label for="pwd">Enter BIC:</label>
-      <input type="text" name="bic" class="form-control" required  required minlength="8" maxlength="11" id="pwd" [(ngModel)]="transferInfo.bic" (input)="bicCal()"  #bicNgModel="ngModel">
-      <div *ngIf="bicNgModel.invalid && bicNgModel.touched" class="badge badge-danger">
-        <div *ngIf="bicNgModel.errors.required" > This field is required</div> 
-        <div *ngIf="bicNgModel.errors.minlength" >You must type more then 8 characters</div>     
+    <!-->amount input<-->
+    <div class="form-group">
+      <label for="pwd">Amount</label>  
+      <div class="input-group"> 
+        <input type="number" name="amt" value="100.00" min="0" step="0.50" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" id="c2"  [(ngModel)]="transferInfo.amount" />
+        <span class="input-group-addon">
+          <div class="dropdown"  dropdown [dropdownToggle]="true" >
+            <button class="btn-mny" dropdown-open type="button" >{{transferInfo.currency}}</button>
+            <ul class="dropdown-menu" >
+              <li><a *ngFor="let currency of currencyList" (click)="setChoosenCurrency($event)">{{currency}}</a></li>
+            </ul>
+          </div>
+        </span>
+      </div> 
+    </div>
+    
+    <!-->creditor account bic input<-->
+    <div class="row">
+        <div class="col-sm-7">
+          <div class="form-group {{has_error}}">
+            <label for="pwd">Destination Bank Identification Code (BIC)</label>
+            <input placeholder="Identification Code" type="text" name="bic" class="form-control" required  required minlength="4" maxlength="11" id="pwd" [(ngModel)]="transferInfo.bic" (input)="bicCal()"  #bicNgModel="ngModel">
+            <div *ngIf="bicNgModel.invalid && bicNgModel.touched" class="badge badge-danger">
+              <div *ngIf="bicNgModel.errors.required" > This field is required</div> 
+            </div>
+            <div *ngIf="isVisible" class="badge badge-danger">
+                <div>Invalid BIC</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <div class="form-group ">
+            <label for="disabledInput">Bank's Name</label>
+            <input type="text" name="bankName" placeholder="Bank's Name" class="form-control" disabled id="disabledInput" [(ngModel)]="transferInfo.bankName">
+          </div>
       </div>
-  </div>
+    </div>
 
-  <!-->calculate and transfer button {{calculate_fees_disable}} in class<-->
-  <button type="button" class="btn btn-mny btn-block {{calculate_fees_disable}}" (click)="calculateFees()">Calculate Fees Options</button>
-  <button id="openModalButton" [hidden]="true" data-toggle="modal" data-target="#wrongInput">Open Modal</button>
-  <button type="button" class="btn btn-mny btn-block mny-btn" *ngIf="isVisible" (click)="sumerrize()">Transfer Money</button>
-  <button id="openModalButton2" [hidden]="true" data-toggle="modal" data-target="#wrongFeeInput">Open Modal</button>
-  <button id="openModalButton3" [hidden]="true" data-toggle="modal" data-target="#sumrize">Open Modal</button>
+
+    <!-->creditor account number and name - optionanl input<-->
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group ">
+          <label for="pwd">Account Number</label>
+          <input type="text" name="accNumber" placeholder="Account Number" required class="form-control" [(ngModel)]="transferInfo.cdtNumber"  #accNumModel="ngModel">
+          <div *ngIf="accNumModel.invalid && accNumModel.touched" class="badge badge-danger">
+              <div *ngIf="accNumModel.errors.required" > This field is required</div> 
+            </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group ">
+          <label for="pwd">Name</label>
+          <input type="text" name="cdtName" placeholder="Name" class="form-control" id="pwd" [(ngModel)]="transferInfo.cdtName">
+        </div>
+      </div>
+    </div>
+    
+
+    <!-->calculate and transfer button {{calculate_fees_disable}} in class<-->
+    <button type="button" class="btn btn-mny btn-block {{calculate_fees_disable}}" (click)="calculateFees()">Calculate Charging Options</button>
+    <button id="openModalButton" [hidden]="true" data-toggle="modal" data-target="#wrongInput">Open Modal</button>
+    <button type="button" class="btn btn-mny btn-block mny-btn {{transfer_money_disable}}" (click)="sumerrize()">Transfer Money</button>
+    <button id="openModalButton2" [hidden]="true" data-toggle="modal" data-target="#wrongFeeInput">Open Modal</button>
+    <button id="openModalButton3" [hidden]="true" data-toggle="modal" data-target="#sumrize">Open Modal</button>
 </form>
 
 
@@ -85,7 +119,7 @@
           <h4 class="modal-title">Input Error</h4>
         </div>
         <div class="modal-body">
-            <p>Make sure to choose Account and enter Amount</p>
+            <p>Make sure to submit all inputs</p>
           </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

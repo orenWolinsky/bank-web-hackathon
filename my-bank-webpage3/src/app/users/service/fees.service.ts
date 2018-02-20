@@ -17,7 +17,8 @@ export class FeesService{
 
     public feesSubject:Subject<FeeIncomingInfo> = new Subject();//should be array of feejsons //try working with task json
     public strArr: string[];
-    public url:string = "http://192.168.173.143:8080/CrunchifyTutorials/api/crunchifyService";
+    public url:string = //"http://192.168.169.59:8888/myapp/api/calculateFees";
+    "http://192.168.173.143:8080/feesServer/api/calculateFees";//      crunchifyService";
 
     public par = new HttpParams();
     private data:MoneyTransferData = new MoneyTransferData();
@@ -35,10 +36,10 @@ export class FeesService{
         let json:string = this.genteratePostJson(info);
         console.log(json);
 
-        setTimeout(() => {
-        this.setMockService();
-        this.feesSubject.next(this.feeIncoming);    
-        }, 1000);
+        // setTimeout(() => {
+        // this.setMockService();
+        // this.feesSubject.next(this.feeIncoming);    
+        // }, 1000);
 
         return this._http.post(this.url,JSON.stringify(json)).map((res)=>{
             console.log("response is recived");
@@ -90,11 +91,12 @@ export class FeesService{
         return json;
     }
     public isTransferInputValid(money:MoneyTransferData):boolean{
-        if(money.account === "My Accounts" || money.amount<10 || money.bic === undefined){
+        if(money.account === "My Accounts" || money.amount<10 || money.bankName === undefined || money.cdtNumber === undefined){
             return false;
         }
         return true;
     }
+
 
 
     public setProduct(prod:string){

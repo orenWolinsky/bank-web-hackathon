@@ -11,6 +11,11 @@ export class MoneyTransferData{
 
     public productFee:string;
     public feePart:string;
+
+    public bankName:string;
+    public cdtNumber:string;
+    public cdtName:string;
+    
     constructor(){
 
     }
