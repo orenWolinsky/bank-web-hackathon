@@ -86,7 +86,7 @@ export class FeesService{
         this.feeIncoming.immidiateCableFee = feeJson.CableFees ? feeJson.CableFees:3.2;
         this.feeIncoming.immidiateInternationalFee = feeJson.InternationalFees? feeJson.InternationalFees: 1.5;
         this.feeIncoming.immidiateTaxFee = feeJson.TaxFees?feeJson.TaxFees:0.5;     
-        this.feeIncoming.immidiateFee = this.feeIncoming.totalImmidiateFee();
+        this.feeIncoming.immidiateFee = this.feeIncoming.totalImmidiateFee() |1;
     }
 
     private parseIncomingUrgentFee(feeJson){
