@@ -23,8 +23,8 @@ export class FeesService{
     public strArr: string[];
     public url:string = 
     //"http://192.168.173.143:8080/CrunchifyTutorials/api/crunchifyService";//      working old version
-    "http://192.168.173.143:8080/feesServer/api/calculateFees"; // working local API
-    //"http://192.168.169.59:8888/myapp/api/calculateFees"; //docker URL
+    //"http://192.168.173.143:8080/feesServer/api/calculateFees"; // working local API
+    "http://192.168.169.59:8888/myapp/api/calculateFees"; //docker URL
 
     public par = new HttpParams();
     private data:MoneyTransferData = new MoneyTransferData();
@@ -64,13 +64,12 @@ export class FeesService{
             
             let answer = JSON.parse(res._body); 
             console.log(answer);
-            let feeResult:FeeResults = new FeeResults();
 
-            console.log(answer.feesResults);
-            console.log(answer.feesResults.Immediate);
-            let map1:Map<string,string> = new Map<string,string>();
-            map1 = answer.feesResults.Immediate;
-            console.log();
+            let rsltFees = answer.feesResults;
+            console.log(rsltFees);
+            this.parseIncomingImmediateFee(rsltFees.Immediate);
+            this.parseIncomingUrgentFee(rsltFees.SameDay);
+            this.parseIncomingNonUrgentFee(rsltFees.TwoDaysDelivery);
 
             this.feesSubject.next(this.feeIncoming);
 
@@ -81,26 +80,30 @@ export class FeesService{
     }
 
     /** HERE MAKE SURE THER IS NO NULL POINTER EXCEPTION OR SOMETHING */
-    private parseIncomingFeesToFeeIncoming(feeJson:FeeResults){
+    private parseIncomingImmediateFee(feeJson){
         //set immediate fee
-        this.feeIncoming.immidiateFee = feeJson.feeResult.get(MopService.mopList[0]).get("") | 3.0;
-        this.feeIncoming.immidiateCableFee = feeJson.feeResult.get(MopService.mopList[0]).get("") | 2.5;
-        this.feeIncoming.immidiateInternationalFee = feeJson.feeResult.get(MopService.mopList[0]).get("") | 2.5;
-        this.feeIncoming.immidiateTaxFee =feeJson.feeResult.get(MopService.mopList[0]).get("") | 0.5;
-
-        //set urgent fee
-        this.feeIncoming.urgentFee = feeJson.feeResult.get(MopService.mopList[1]).get("") | 4.2;
-        this.feeIncoming.urgentCableFee = feeJson.feeResult.get(MopService.mopList[1]).get("") | 3.5;
-        this.feeIncoming.urgentInternationalFee = feeJson.feeResult.get(MopService.mopList[0]).get("") | 2.5;
-        this.feeIncoming.urgentTaxFee = feeJson.feeResult.get(MopService.mopList[1]).get("") | 0.7;
-
-        //set non urgent fee
-        this.feeIncoming.nonUrgentFee = feeJson.feeResult.get(MopService.mopList[2]).get("") | 1.5;
-        this.feeIncoming.nonUrgentCableFee = feeJson.feeResult.get(MopService.mopList[2]).get("") | 1.2;
-        this.feeIncoming.nonUrgentInternationalFee = feeJson.feeResult.get(MopService.mopList[0]).get("") | 2.5;
-        this.feeIncoming.nonUrgentTaxFee = feeJson.feeResult.get(MopService.mopList[2]).get("") | 0.3;
+        //debugger;
+        this.feeIncoming.immidiateCableFee = feeJson.CableFees ? feeJson.CableFees:3.2;
+        this.feeIncoming.immidiateInternationalFee = feeJson.InternationalFees? feeJson.InternationalFees: 1.5;
+        this.feeIncoming.immidiateTaxFee = feeJson.TaxFees?feeJson.TaxFees:0.5;     
+        this.feeIncoming.immidiateFee = this.feeIncoming.totalImmidiateFee();
     }
 
+    private parseIncomingUrgentFee(feeJson){
+        //set urgent fee
+        this.feeIncoming.urgentCableFee = feeJson.CableFees?feeJson.CableFees:3.5;
+        this.feeIncoming.urgentInternationalFee = feeJson.InternationalFees?feeJson.InternationalFees:2.5;
+        this.feeIncoming.urgentTaxFee = feeJson.TaxFees?feeJson.TaxFees:0.7;
+        this.feeIncoming.urgentFee = this.feeIncoming.totalUrgenteFee();  
+    }
+
+    private parseIncomingNonUrgentFee(feeJson){
+        //set non urgent fee
+        this.feeIncoming.nonUrgentCableFee = feeJson.CableFees?feeJson.CableFees:1.2;
+        this.feeIncoming.nonUrgentInternationalFee = feeJson.InternationalFees?feeJson.InternationalFees:2.5;
+        this.feeIncoming.nonUrgentTaxFee = feeJson.TaxFees?feeJson.TaxFees:0.3;
+        this.feeIncoming.nonUrgentFee = this.feeIncoming.totalNonUrgentFee();        
+    }
     
     public isTransferInputValid(money:MoneyTransferData):boolean{
         if(money.account === "My Accounts" || money.amount<10 || money.bankName === undefined || money.cdtNumber === undefined){
