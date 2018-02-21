@@ -11,6 +11,9 @@ import { Stub } from '../json/stubTask.json';
 import { HttpHeaderResponse } from '@angular/common/http/src/response';
 import { HttpModule, Http, RequestOptions,Headers } from '@angular/http';
 import { FeeIncomingInfo } from '../class/feeIncomingInfo';
+import { MopService } from './mop.service';
+import { FeeResults } from '../class/feeresults';
+import { FeeResult } from '../json/feeresult.json';
 //import { Headers } from '@angular/http/src/headers';
 
 @Injectable()
@@ -20,7 +23,8 @@ export class FeesService{
     public strArr: string[];
     public url:string = 
     //"http://192.168.173.143:8080/CrunchifyTutorials/api/crunchifyService";//      working old version
-    "http://192.168.173.143:8080/feesServer/api/calculateFees";
+    "http://192.168.173.143:8080/feesServer/api/calculateFees"; // working local API
+    //"http://192.168.169.59:8888/myapp/api/calculateFees"; //docker URL
 
     public par = new HttpParams();
     private data:MoneyTransferData = new MoneyTransferData();
@@ -40,7 +44,6 @@ export class FeesService{
     public startFeesCalculation(info:MoneyTransferData): Observable<FeeIncomingInfo> {
         console.log('starting with post fees calculation');
         console.log(info);
-        let json:string = this.genteratePostJson(info);
 
         let jason = {
             localoffice:"FIN",
@@ -49,75 +52,56 @@ export class FeesService{
             creditCurrency:info.currency, //real currency
             debitCsutomer:info.account, //my account
             creditCsutomer:info.cdtNumber, //
-            productList: [ ]//imidate sha our ben but wait, i don't choose it yet!
+            productList: MopService.mopList//imidate sha our ben but wait, i don't choose it yet!
         };
 		 
-
         console.log(jason);
-
-        // setTimeout(() => {
-        // this.setMockService();
-        // this.feesSubject.next(this.feeIncoming);    
-        // }, 1000);
-        //JSON.stringify(json)
-
-
-        //this.head.append("Content-Type", 'application/json')
-        // this.head.append('Access-Control-Allow-Origin', '*');
-        // this.head.append('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
-        // this.head.append('Access-Control-Allow-Headers','Origin, Content-Type, X-Auth-Token');
         let body = JSON.stringify(jason);
-        //let option = new RequestOptions({headers:this.head});
 
-        return this._http.post(this.url,body).map((res)=>{
+        return this._http.post(this.url,body).map((res:any)=>{
             console.log("response is recived");
             console.log(res);
             
-            //console.log(JSON.parse(res._body)); //here parsing the incmoing response
-            
-            //now just mocking the response info
-            this.setMockService();
+            let answer = JSON.parse(res._body); 
+            console.log(answer);
+            let feeResult:FeeResults = new FeeResults();
+
+            console.log(answer.feesResults);
+            console.log(answer.feesResults.Immediate);
+            let map1:Map<string,string> = new Map<string,string>();
+            map1 = answer.feesResults.Immediate;
+            console.log();
 
             this.feesSubject.next(this.feeIncoming);
+
             return this.feeIncoming;
         },
-        (err)=>{
-            console.log('error in response');
-        }
     );
 
     }
 
-    private setMockService(){
-        this.feeIncoming.immidiateFee = 2.5+1;
-        this.feeIncoming.immidiateBaseFee = 2.5;
-        this.feeIncoming.immidiateTaxFee = 1;
+    /** HERE MAKE SURE THER IS NO NULL POINTER EXCEPTION OR SOMETHING */
+    private parseIncomingFeesToFeeIncoming(feeJson:FeeResults){
+        //set immediate fee
+        this.feeIncoming.immidiateFee = feeJson.feeResult.get(MopService.mopList[0]).get("") | 3.0;
+        this.feeIncoming.immidiateCableFee = feeJson.feeResult.get(MopService.mopList[0]).get("") | 2.5;
+        this.feeIncoming.immidiateInternationalFee = feeJson.feeResult.get(MopService.mopList[0]).get("") | 2.5;
+        this.feeIncoming.immidiateTaxFee =feeJson.feeResult.get(MopService.mopList[0]).get("") | 0.5;
 
-        this.feeIncoming.nonUrgentFee = 2.0+0.5;
-        this.feeIncoming.nonUrgentBaseFee = 2.0; 
-        this.feeIncoming.nonUrgentTaxFee = 0.5;
+        //set urgent fee
+        this.feeIncoming.urgentFee = feeJson.feeResult.get(MopService.mopList[1]).get("") | 4.2;
+        this.feeIncoming.urgentCableFee = feeJson.feeResult.get(MopService.mopList[1]).get("") | 3.5;
+        this.feeIncoming.urgentInternationalFee = feeJson.feeResult.get(MopService.mopList[0]).get("") | 2.5;
+        this.feeIncoming.urgentTaxFee = feeJson.feeResult.get(MopService.mopList[1]).get("") | 0.7;
 
-        this.feeIncoming.urgentFee = 3.0+1.3
-        this.feeIncoming.urgentBaseFee = 3.0
-        this.feeIncoming.urgentTaxFee = 1.3
-
+        //set non urgent fee
+        this.feeIncoming.nonUrgentFee = feeJson.feeResult.get(MopService.mopList[2]).get("") | 1.5;
+        this.feeIncoming.nonUrgentCableFee = feeJson.feeResult.get(MopService.mopList[2]).get("") | 1.2;
+        this.feeIncoming.nonUrgentInternationalFee = feeJson.feeResult.get(MopService.mopList[0]).get("") | 2.5;
+        this.feeIncoming.nonUrgentTaxFee = feeJson.feeResult.get(MopService.mopList[2]).get("") | 0.3;
     }
 
-    private genteratePostJson(data:MoneyTransferData):string{
-        let json:string = `
-        {
-            "localoffice" : "FIN",
-            "bdDebitamount" : 10,
-            "bdCreditamount" : 10,
-            "creditCurrency" : "${data.currency}",
-            "debitCsutomer" : "myDebitCustomer",
-            "creditCsutomer" : "myCreditCustomer",
-            "productList" : [ "myProduct" ]
-          }
-        `;
-
-        return json;
-    }
+    
     public isTransferInputValid(money:MoneyTransferData):boolean{
         if(money.account === "My Accounts" || money.amount<10 || money.bankName === undefined || money.cdtNumber === undefined){
             return false;
@@ -141,4 +125,27 @@ export class FeesService{
     public getFeePart(){
         return this.data.feePart;
     }
+
+
+    public setMockingService(){
+        this.feeIncoming.immidiateCableFee = 3.5;
+        this.feeIncoming.immidiateInternationalFee = 1.5;
+        this.feeIncoming.immidiateTaxFee = 0.7;
+        this.feeIncoming.immidiateFee = this.feeIncoming.totalImmidiateFee();
+
+        //set urgent fee
+        this.feeIncoming.urgentCableFee = 2.5;
+        this.feeIncoming.urgentInternationalFee = 0.8;
+        this.feeIncoming.urgentTaxFee = 0.5;
+        this.feeIncoming.urgentFee = this.feeIncoming.totalUrgenteFee();
+
+        //set non urgent fee
+        this.feeIncoming.nonUrgentCableFee = 1.5;
+        this.feeIncoming.nonUrgentInternationalFee = 0.5;
+        this.feeIncoming.nonUrgentTaxFee = 0.3;
+        this.feeIncoming.nonUrgentFee = this.feeIncoming.totalNonUrgentFee();
+
+        this.feesSubject.next(this.feeIncoming);
+    }
+
 }

@@ -9,6 +9,7 @@
 }
 .fee-info-div{
     background-color:beige;
+    
 }
 
 .tab-grn{
@@ -23,4 +24,16 @@
 
 .btn{
     text-align: left;
+    background-color: darkgrey;
+}
+
+.xyz{
+    background-color: darkolivegreen;
+}
+
+a{
+    color: white;
+}
+a:active{
+    color: white;
 }

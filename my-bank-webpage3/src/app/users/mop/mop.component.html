@@ -2,9 +2,9 @@
     <label for="pwd">Method of payments</label>
             
     <div class="btn-group-vertical btn-block btns-pmts-option" data-toggle="buttons">
-        <button type="button" class="btn btn-defult {{immdt_btn.mop_btn_active}} imdt" (click)="showScreenBelow($event)"><a data-toggle="tooltip" title="{{imdtInfo}}" style="color:black">{{immdt_btn.mopName}}: {{immdt_btn.mopNA}} {{feeData.immidiateFee}}  {{currency}}</a></button>
-        <button type="button" class="btn btn-defult {{urg_btn.mop_btn_active}} urgt" (click)="showScreenBelow($event)"><a data-toggle="tooltip" title={{urgInfo}} style="color:black">{{urg_btn.mopName}}:  {{urg_btn.mopNA}}{{feeData.urgentFee}}  {{currency}}</a></button>
-        <button type="button" class="btn btn-defult {{nUrg_btn.mop_btn_active}} nogt" (click)="showScreenBelow($event)"><a data-toggle="tooltip" title={{nUrgInfo}} style="color:black">{{nUrg_btn.mopName}}: {{nUrg_btn.mopNA}}{{feeData.nonUrgentFee}}  {{currency}}</a></button>
+        <button type="button" class="btn btn-defult {{immdt_btn.mop_btn_active}} imdt {{x}}" (click)="showScreenBelow($event)"><a data-toggle="tooltip" title="{{imdtInfo}}" >{{immdt_btn.mopName}}: {{immdt_btn.mopNA}} {{feeData.immidiateFee}}  {{currency}}</a></button>
+        <button type="button" class="btn btn-defult {{urg_btn.mop_btn_active}} urgt {{y}}" (click)="showScreenBelow($event)"><a data-toggle="tooltip" title={{urgInfo}}>{{urg_btn.mopName}}:  {{urg_btn.mopNA}}{{feeData.urgentFee}}  {{currency}}</a></button>
+        <button type="button" class="btn btn-defult {{nUrg_btn.mop_btn_active}} nogt {{z}}" (click)="showScreenBelow($event)"><a data-toggle="tooltip" title={{nUrgInfo}} >{{nUrg_btn.mopName}}: {{nUrg_btn.mopNA}}{{feeData.nonUrgentFee}}  {{currency}}</a></button>
 <!-->
         <div class="radio"> 
             <label><input type="radio" name="optradio">{{immdt_btn.mopName}}  {{immidiateFee}}</label>
@@ -31,29 +31,28 @@
       <div class="tab-content fee-info-div">
         <div id="sha" class="tab-pane fade in active">
             <div class="panel-body fee-info-div" (dblclick)="closeScreen()">SHA - Each party pays its own fees</div>
-            <div class="panel-footer fee-info-div">Total Fee: {{feeData.productFee}}  {{currency}}</div>
-            <div class="panel-footer fee-info-div">Base Fee: {{feeData.productBaseFee}}  {{currency}}</div>
-            <div class="panel-footer fee-info-div">Tax Fee: {{feeData.productTaxFee}}  {{currency}}</div>
-            <div class="panel-footer fee-info-div">Additional Fee: {{feeData.additionalFee}}  {{currency}}</div>
+            <div class="panel-footer fee-info-div">Total Fees: {{feeData.productFee}}  {{currency}}</div>
+            <div class="panel-footer fee-info-div">Cable Fees: {{feeData.productCableFee}}  {{currency}}</div>
+            <div class="panel-footer fee-info-div">International Fees: {{feeData.productInternationalFee}}  {{currency}}</div>
+            <div class="panel-footer fee-info-div">Tax Fees: {{feeData.productTaxFee}}  {{currency}}</div>
         </div>
         
         <div id="our" class="tab-pane fade" >
             <div class="panel-body" (dblclick)="closeScreen()">OUR - Originator pays all charges</div>
-            <div class="panel-footer fee-info-div">Total Fee: {{feeData.productFee}}  {{currency}}</div>
-            <div class="panel-footer fee-info-div">Base Fee: {{feeData.productBaseFee}}  {{currency}}</div>
-            <div class="panel-footer fee-info-div">Tax Fee: {{feeData.productTaxFee}}  {{currency}}</div>
-            <div class="panel-footer fee-info-div">Additional Fee: {{feeData.additionalFee}}  {{currency}}</div>
+            <div class="panel-footer fee-info-div">Total Fees: {{feeData.productFee}}  {{currency}}</div>
+            <div class="panel-footer fee-info-div">Cable Fees: {{feeData.productCableFee}}  {{currency}}</div>
+            <div class="panel-footer fee-info-div">International Fees: {{feeData.productInternationalFee}}  {{currency}}</div>
+            <div class="panel-footer fee-info-div">Tax Fees: {{feeData.productTaxFee}}  {{currency}}</div>
         </div>
 
         <div id="ben" class="tab-pane fade">
                 <div class="panel-body" (dblclick)="closeScreen()">BEN - Beneficiary pays all charges (Sheep bank fees will be deducted from payment amount)</div>
-                <div class="panel-footer fee-info-div">Total Fee: {{feeData.productFee}}  {{currency}}</div>
-                <div class="panel-footer fee-info-div">Base Fee: {{feeData.productBaseFee}}  {{currency}}</div>
-                <div class="panel-footer fee-info-div">Tax Fee: {{feeData.productTaxFee}}  {{currency}}</div>
-                <div class="panel-footer fee-info-div">Additional Fee: {{feeData.additionalFee}}  {{currency}}</div>
+                <div class="panel-footer fee-info-div">Total Fees: {{feeData.productFee}}  {{currency}}</div>
+                <div class="panel-footer fee-info-div">Cable Fees: {{feeData.productCableFee}}  {{currency}}</div>
+                <div class="panel-footer fee-info-div">International Fees: {{feeData.productInternationalFee}}  {{currency}}</div>
+                <div class="panel-footer fee-info-div">Tax Fees: {{feeData.productTaxFee}}  {{currency}}</div>
         </div>
       </div>
-
 </div>
 
 

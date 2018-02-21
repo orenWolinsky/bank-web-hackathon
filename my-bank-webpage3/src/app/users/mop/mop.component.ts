@@ -19,10 +19,10 @@ export class MopComponent implements OnInit {
   
   private disabled:string = "disabled";
   private active:string = "active";
-
-  public immdt_btn:MOPOption = new MOPOption("Immidiate",this.active);;
-  public urg_btn:MOPOption = new MOPOption("Same Day (Urgent)",this.active);
-  public nUrg_btn:MOPOption = new MOPOption("Two Days Delivery",this.active);
+  //
+  public immdt_btn:MOPOption;
+  public urg_btn:MOPOption;
+  public nUrg_btn:MOPOption;
 
   public Content:string;
 
@@ -30,10 +30,19 @@ export class MopComponent implements OnInit {
   public urgInfo:string = "Tranfer will be done at end of business day";
   public nUrgInfo:string = "Tranfer will be done in two business day";
 
+  public x:string = "";
+  public y:string = "";
+  public z:string = "";
+
   constructor(private _feeService:FeesService,
               private _mopService:MopService,
               private _currencyService:CurrencyService) { 
     
+        
+        this.immdt_btn = new MOPOption(MopService.mopList[0],this.active);;
+        this.urg_btn= new MOPOption(MopService.mopList[1],this.active);
+        this.nUrg_btn = new MOPOption(MopService.mopList[2],this.active);
+
         this._feeService.feesSubject.subscribe((fee:FeeIncomingInfo)=>{
           console.log("subscribed to fee service and recived fee " + fee);
           this.feeData = fee;
@@ -67,6 +76,7 @@ export class MopComponent implements OnInit {
   public showScreenBelow(event){
     const text:string = event.target.textContent;
     const isBlocked:boolean = this.isblocked(event.target.className);
+    this.mopChoosen(event.target.className);
     console.log(text); 
     if(!isBlocked){
       this.titleFeeBox = text;
@@ -96,6 +106,23 @@ export class MopComponent implements OnInit {
   }
 
 
+  private mopChoosen(title:string){
+    console.log(title);
+    this.x = "";
+    this.y = "";
+    this.z = "";
+
+    if(title.includes("imdt")){
+      this.x = "xyz";
+    }
+    else if(title.includes("urgt")){
+      this.y = "xyz";
+    }
+    else if(title.includes("nogt")){
+      this.z = "xyz";
+    }
+  }
+
   public clickTab(event):void{
     console.log('pressed '+event.target.text);
     event.target.classList.add('active');
@@ -105,17 +132,20 @@ export class MopComponent implements OnInit {
   private setBaseFeeWithRightData(mop:string){
     if(mop.includes("nogt")){
       this.feeData.productFee = this.feeData.nonUrgentFee;
-      this.feeData.productBaseFee = this.feeData.nonUrgentBaseFee;
+      this.feeData.productCableFee = this.feeData.nonUrgentCableFee;
+      this.feeData.productInternationalFee = this.feeData.nonUrgentInternationalFee;
       this.feeData.productTaxFee = this.feeData.nonUrgentTaxFee;
     }
     else if(mop.includes("urgt")){
       this.feeData.productFee = this.feeData.urgentFee;
-      this.feeData.productBaseFee = this.feeData.urgentBaseFee;
+      this.feeData.productCableFee = this.feeData.urgentCableFee;
+      this.feeData.productInternationalFee = this.feeData.urgentInternationalFee;      
       this.feeData.productTaxFee = this.feeData.urgentTaxFee;
     }
     else if(mop.includes("imdt")){
       this.feeData.productFee = this.feeData.immidiateFee;
-      this.feeData.productBaseFee = this.feeData.immidiateBaseFee;
+      this.feeData.productCableFee = this.feeData.immidiateCableFee;
+      this.feeData.productInternationalFee = this.feeData.immidiateInternationalFee;      
       this.feeData.productTaxFee = this.feeData.immidiateTaxFee;
     }
 

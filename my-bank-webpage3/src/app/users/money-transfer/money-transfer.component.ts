@@ -115,7 +115,14 @@ export class MoneyTransferComponent implements OnInit {
    
       this._feeService.startFeesCalculation(this.transferInfo).subscribe((fees:FeeIncomingInfo)=>{
         console.log('started fee calculation '+fees);
-      });
+      },
+      (err)=>{
+        console.log('Http error response, starting mocking service');
+        console.log(err);
+        this._feeService.setMockingService();
+        //handle here fee mock service!!!
+      }
+    );
     
     // }else{
     //   console.log('error cannot transfer money');
@@ -127,6 +134,11 @@ export class MoneyTransferComponent implements OnInit {
   here i will get from fee service also the calculated choosen fees so i can add to amount
   */
   sumerrize(){
+
+    if(this.transfer_money_disable === "disabled"){
+        return;
+    }
+  
     let product:string = this._feeService.getProduct();
     let feePart:string = this._feeService.getFeePart();
     console.log(`Sumerrize money transfer with ${product} and fee part ${feePart}`);

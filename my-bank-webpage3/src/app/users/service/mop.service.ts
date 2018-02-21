@@ -8,7 +8,7 @@ export class MopService{
 
     public mopSubject:Subject<boolean[]> = new Subject();
     public mopOptionsArr:boolean[] = [];  
-    public accList:string[] = ["Current","Savings","Expenses"];
+    public static mopList:string[] = ["Immediate","Same Day","Two Days Delivery"];
     public france:string = "FRANCE";
     public israel:string = "ISRAEL";
     public usa:string = "USA";
