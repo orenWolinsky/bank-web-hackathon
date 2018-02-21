@@ -21,7 +21,7 @@
 
 
 
-<div class="panel panel-default block-fee-info fee-info-div" (click)="setChoosenFees($event)">
+<div class="panel panel-default block-fee-info fee-info-div" *ngIf="isVisible" (click)="setChoosenFees($event)">
         <div class="whopay"><label for="pwd">Who Pay Charges</label></div>
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#sha" class="tab-grn">SHA</a></li>
