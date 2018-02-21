@@ -20,39 +20,81 @@
 
 
 
-<div class="panel panel-default block-fee-info fee-info-div" *ngIf="isVisible" (click)="setChoosenFees($event)">
-    <div class="whopay"><label for="pwd">Who Pay Charges</label></div>
-    <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#sha" class="tab-grn">SHA</a></li>
-        <li><a data-toggle="tab" href="#ben" class="tab-grn">BEN</a></li>
-        <li><a data-toggle="tab" href="#our" class="tab-grn">OUR</a></li>
-      </ul>
-      
-      <div class="tab-content fee-info-div">
-        <div id="sha" class="tab-pane fade in active">
-            <div class="panel-body fee-info-div" (dblclick)="closeScreen()">SHA - Each party pays its own fees</div>
-            <div class="panel-footer fee-info-div">Total Fees: {{feeData.productFee}}  {{currency}}</div>
-            <div class="panel-footer fee-info-div">Cable Fees: {{feeData.productCableFee}}  {{currency}}</div>
-            <div class="panel-footer fee-info-div">International Fees: {{feeData.productInternationalFee}}  {{currency}}</div>
-            <div class="panel-footer fee-info-div">Tax Fees: {{feeData.productTaxFee}}  {{currency}}</div>
-        </div>
-        
-        <div id="our" class="tab-pane fade" >
-            <div class="panel-body" (dblclick)="closeScreen()">OUR - Originator pays all charges</div>
-            <div class="panel-footer fee-info-div">Total Fees: {{feeData.productFee}}  {{currency}}</div>
-            <div class="panel-footer fee-info-div">Cable Fees: {{feeData.productCableFee}}  {{currency}}</div>
-            <div class="panel-footer fee-info-div">International Fees: {{feeData.productInternationalFee}}  {{currency}}</div>
-            <div class="panel-footer fee-info-div">Tax Fees: {{feeData.productTaxFee}}  {{currency}}</div>
-        </div>
 
-        <div id="ben" class="tab-pane fade">
-                <div class="panel-body" (dblclick)="closeScreen()">BEN - Beneficiary pays all charges (Sheep bank fees will be deducted from payment amount)</div>
-                <div class="panel-footer fee-info-div">Total Fees: {{feeData.productFee}}  {{currency}}</div>
-                <div class="panel-footer fee-info-div">Cable Fees: {{feeData.productCableFee}}  {{currency}}</div>
-                <div class="panel-footer fee-info-div">International Fees: {{feeData.productInternationalFee}}  {{currency}}</div>
-                <div class="panel-footer fee-info-div">Tax Fees: {{feeData.productTaxFee}}  {{currency}}</div>
-        </div>
-      </div>
-</div>
-
-
+<div class="panel panel-default block-fee-info fee-info-div" (click)="setChoosenFees($event)">
+        <div class="whopay"><label for="pwd">Who Pay Charges</label></div>
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#sha" class="tab-grn">SHA</a></li>
+            <li><a data-toggle="tab" href="#ben" class="tab-grn">BEN</a></li>
+            <li><a data-toggle="tab" href="#our" class="tab-grn">OUR</a></li>
+          </ul>
+          
+          <div class="tab-content fee-info-div">
+            <div id="sha" class="tab-pane fade in active">
+                    <div class="panel-body fee-info-div" (dblclick)="closeScreen()">SHA - Each party pays its own fees <br> Your fees will added to amount</div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Total [{{currency}}]</th>
+                            <th scope="col">Cable Fees</th>
+                            <th scope="col">Int. Fees</th>
+                            <th scope="col">Tax Fees</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">{{feeData.productFee}}</th>
+                            <td>{{feeData.productCableFee}}</td>
+                            <td>{{feeData.productInternationalFee}}</td>
+                            <td>{{feeData.productTaxFee}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div id="our" class="tab-pane fade" >
+                    <div class="panel-body" (dblclick)="closeScreen()">OUR - Originator pays all charges <br> Fees will be added to amount</div>
+                    <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Total [{{currency}}]</th>
+                                    <th scope="col">Cable Fees</th>
+                                    <th scope="col">Int. Fees</th>
+                                    <th scope="col">Tax Fees</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">{{feeData.productFee}}</th>
+                                    <td>{{feeData.productCableFee}}</td>
+                                    <td>{{feeData.productInternationalFee}}</td>
+                                    <td>{{feeData.productTaxFee}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+            </div>
+    
+            <div id="ben" class="tab-pane fade">
+                    <div class="panel-body" (dblclick)="closeScreen()">BEN - Beneficiary pays all charges <br> Fees will be subtracted from amount</div>
+                    <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Total [{{currency}}]</th>
+                                    <th scope="col">Cable Fees</th>
+                                    <th scope="col">Int. Fees</th>
+                                    <th scope="col">Tax Fees</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">0</th>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+            </div>
+          </div>
+    </div>
+ 

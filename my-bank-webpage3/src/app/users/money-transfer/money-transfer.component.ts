@@ -61,12 +61,21 @@ export class MoneyTransferComponent implements OnInit {
   setChoosenAccount(event){
     this.transferInfo.account = event.target.text;
     console.log('Account choosen ' + this.transferInfo.account);
+    if(this.transferInfo.account.includes("EUR")){
+      this.setCurrency(this.currencyList[1]);
+    }else{
+      this.setCurrency(this.currencyList[0]);
+    }
   }
 
   setChoosenCurrency(event){
-    this.transferInfo.currency = event.target.text;
-    this._currencyService.updateCurrency(this.transferInfo.currency);
+    this.setCurrency(event.target.text);
     console.log('Currency choosen ' + this.transferInfo.currency);
+  }
+
+  private setCurrency(currency){
+    this.transferInfo.currency = currency;
+    this._currencyService.updateCurrency(this.transferInfo.currency);  
   }
 
   public bicCal(){

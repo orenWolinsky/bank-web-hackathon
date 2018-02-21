@@ -23,8 +23,8 @@ export class FeesService{
     public strArr: string[];
     public url:string = 
     //"http://192.168.173.143:8080/CrunchifyTutorials/api/crunchifyService";//      working old version
-    //"http://192.168.173.143:8080/feesServer/api/calculateFees"; // working local API
-    "http://192.168.169.59:8888/myapp/api/calculateFees"; //docker URL
+    "http://192.168.173.143:8080/feesServer/api/calculateFees"; // working local API
+    //"http://192.168.169.59:8888/myapp/api/calculateFees"; //docker URL
 
     public par = new HttpParams();
     private data:MoneyTransferData = new MoneyTransferData();
