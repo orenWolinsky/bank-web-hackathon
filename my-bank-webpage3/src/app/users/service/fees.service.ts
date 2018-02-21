@@ -9,20 +9,27 @@ import { Subject } from 'rxjs/Subject';
 import { MoneyTransferData } from '../class/moneyTransfering';
 import { Stub } from '../json/stubTask.json';
 import { HttpHeaderResponse } from '@angular/common/http/src/response';
-import { HttpModule, Http, RequestOptions } from '@angular/http';
+import { HttpModule, Http, RequestOptions,Headers } from '@angular/http';
 import { FeeIncomingInfo } from '../class/feeIncomingInfo';
+//import { Headers } from '@angular/http/src/headers';
 
 @Injectable()
 export class FeesService{
 
     public feesSubject:Subject<FeeIncomingInfo> = new Subject();//should be array of feejsons //try working with task json
     public strArr: string[];
-    public url:string = //"http://192.168.169.59:8888/myapp/api/calculateFees";
-    "http://192.168.173.143:8080/feesServer/api/calculateFees";//      crunchifyService";
+    public url:string = 
+    //"http://192.168.173.143:8080/CrunchifyTutorials/api/crunchifyService";//      working old version
+    "http://192.168.173.143:8080/feesServer/api/calculateFees";
 
     public par = new HttpParams();
     private data:MoneyTransferData = new MoneyTransferData();
     private feeIncoming:FeeIncomingInfo = new FeeIncomingInfo();
+
+
+    //
+    private head:Headers = new Headers();
+    
 
     constructor(private _http:Http) {}
 
@@ -34,14 +41,35 @@ export class FeesService{
         console.log('starting with post fees calculation');
         console.log(info);
         let json:string = this.genteratePostJson(info);
-        console.log(json);
+
+        let jason = {
+            localoffice:"FIN",
+            bdDebitamount:info.amount,//
+            bdCreditamount:info.amount,//
+            creditCurrency:info.currency, //real currency
+            debitCsutomer:info.account, //my account
+            creditCsutomer:info.cdtNumber, //
+            productList: [ ]//imidate sha our ben but wait, i don't choose it yet!
+        };
+		 
+
+        console.log(jason);
 
         // setTimeout(() => {
         // this.setMockService();
         // this.feesSubject.next(this.feeIncoming);    
         // }, 1000);
+        //JSON.stringify(json)
 
-        return this._http.post(this.url,JSON.stringify(json)).map((res)=>{
+
+        //this.head.append("Content-Type", 'application/json')
+        // this.head.append('Access-Control-Allow-Origin', '*');
+        // this.head.append('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+        // this.head.append('Access-Control-Allow-Headers','Origin, Content-Type, X-Auth-Token');
+        let body = JSON.stringify(jason);
+        //let option = new RequestOptions({headers:this.head});
+
+        return this._http.post(this.url,body).map((res)=>{
             console.log("response is recived");
             console.log(res);
             

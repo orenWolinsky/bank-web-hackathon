@@ -16,6 +16,9 @@ export class MoneyTransferData{
     public cdtNumber:string;
     public cdtName:string;
     
+    public product:string;
+    public feePartChoosen:string;
+
     constructor(){
 
     }

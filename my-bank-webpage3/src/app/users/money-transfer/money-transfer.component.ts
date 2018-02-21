@@ -92,36 +92,35 @@ export class MoneyTransferComponent implements OnInit {
 
   calculateFees(){
     //if button is blocked then don't press the button
-    debugger;
-    if(this.calculate_fees_disable === "disabled"){
-      return;
-    }
+    // if(this.calculate_fees_disable === "disabled"){
+    //   return;
+    // }
 
-    console.log(this.transferInfo.bankName);
-    if(this.transferInfo.bankName === undefined){
-      this.has_error = "has-error";
-      this.isVisible = true;
-    }else{
-      this.has_error = "";
-      this.isVisible = false;
-    }
+    // console.log(this.transferInfo.bankName);
+    // if(this.transferInfo.bankName === undefined){
+    //   this.has_error = "has-error";
+    //   this.isVisible = true;
+    // }else{
+    //   this.has_error = "";
+    //   this.isVisible = false;
+    // }
 
-    if(this._feeService.isTransferInputValid(this.transferInfo)){
+    // if(this._feeService.isTransferInputValid(this.transferInfo)){
     
-      console.log(`Starting fee calculation for account ${this.transferInfo.account} amount ${this.transferInfo.amount} and bic ${this.transferInfo.bic}`);
+    //   console.log(`Starting fee calculation for account ${this.transferInfo.account} amount ${this.transferInfo.amount} and bic ${this.transferInfo.bic}`);
       
-      this.transfer_money_disable = "";
-      this.calculate_fees_disable = "disabled";
+    //   this.transfer_money_disable = "";
+    //   this.calculate_fees_disable = "disabled";
 
    
       this._feeService.startFeesCalculation(this.transferInfo).subscribe((fees:FeeIncomingInfo)=>{
         console.log('started fee calculation '+fees);
       });
     
-    }else{
-      console.log('error cannot transfer money');
-      document.getElementById("openModalButton").click();
-    }
+    // }else{
+    //   console.log('error cannot transfer money');
+    //   document.getElementById("openModalButton").click();
+    // }
   }
 
   /*
