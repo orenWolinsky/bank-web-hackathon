@@ -157,7 +157,7 @@
       <div class="modal-body">
         <p>You are about to transfer money to <strong>{{transferInfo.bankName}}</strong> Account: <strong>{{transferInfo.cdtNumber}}</strong> </p>
         <p>From your <strong>{{transferInfo.account}}</strong> account</p>
-        <p><strong>Total of {{transferInfo.total + feeData.productFee}} {{transferInfo.currency}} </strong></p>
+        <p><strong>Total of {{transferInfo.total}} + {{feeData.productFee}} (Fee Charges) = {{transferInfo.total + feeData.productFee}}{{transferInfo.currency}} </strong></p>
         <p><br><br><br>Press <strong>Confirm</strong> button to Complete transaction,<br> or <strong>Cancel</strong> to cancel</p>
       </div>
       <div class="modal-footer">
