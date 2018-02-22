@@ -150,14 +150,15 @@
 <div id="sumrize" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content ">
-      <div class="modal-header">
+      <div class="modal-header smrz-head">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Summarize Transaction</h4>
       </div>
       <div class="modal-body">
-        <p>You are about to transfer money to {{transferInfo.bic}} from your {{transferInfo.account}} account</p>
-        <p>The sum of {{transferInfo.total}} {{transferInfo.currency}} + {{feeData.productFee}} {{transferInfo.currency}} = {{transferInfo.total+feeData.productFee}} {{transferInfo.currency}}</p>
-        <p><br><br><br>Press Confirm button to Complete transaction,<br> or Cancel to cancel</p>
+        <p>You are about to transfer money to <strong>{{transferInfo.bankName}}</strong> Account: <strong>{{transferInfo.cdtNumber}}</strong> </p>
+        <p>From your <strong>{{transferInfo.account}}</strong> account</p>
+        <p><strong>Total of {{transferInfo.total + feeData.productFee}} {{transferInfo.currency}} </strong></p>
+        <p><br><br><br>Press <strong>Confirm</strong> button to Complete transaction,<br> or <strong>Cancel</strong> to cancel</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

@@ -4,7 +4,7 @@
 
 .modal-bank{
     background-color: darkolivegreen;
-    color: black;
+    color: white;
 }
 
 .mny-btn{
@@ -23,7 +23,10 @@
     color: white;
 }
 
-
+.smrz-head{
+    background-color: darkolivegreen;
+    color: white;
+}
 input:focus {
     border: 0.5px solid darkolivegreen;
 }
@@ -31,3 +34,4 @@ input:focus {
 .sum-card{
     background-color: beige;
 }
+

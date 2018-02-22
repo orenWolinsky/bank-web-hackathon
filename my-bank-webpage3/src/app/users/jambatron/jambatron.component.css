@@ -1,6 +1,6 @@
 .bank-head-page{
     margin-top: -20px;
-    margin-bottom: 80px;
+    margin-bottom: 20px;
     padding-left: 20px;
     color: black;
     background-color:beige;
@@ -35,3 +35,7 @@ p{
     left: 250px;
     bottom: -25px;
 }*/
+
+.SP{
+    padding-left: 50px;
+}

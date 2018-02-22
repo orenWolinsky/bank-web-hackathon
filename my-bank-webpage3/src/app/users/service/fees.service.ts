@@ -23,8 +23,8 @@ export class FeesService{
     public strArr: string[];
     public url:string = 
     //"http://192.168.173.143:8080/CrunchifyTutorials/api/crunchifyService";//      working old version
-    "http://192.168.173.143:8080/feesServer/api/calculateFees"; // working local API
-    //"http://192.168.169.59:8888/myapp/api/calculateFees"; //docker URL
+    //"http://192.168.173.143:8080/feesServer/api/calculateFees"; // working local API
+    "http://192.168.169.59:8888/myapp/api/calculateFees"; //docker URL
 
     public par = new HttpParams();
     private data:MoneyTransferData = new MoneyTransferData();
@@ -42,8 +42,8 @@ export class FeesService{
      * @param info 
      */
     public startFeesCalculation(info:MoneyTransferData): Observable<FeeIncomingInfo> {
-        console.log('starting with post fees calculation');
-        console.log(info);
+        console.log('Requesting Fees Calculation [START]');
+        
 
         let jason = {
             localoffice:"FIN",
@@ -54,12 +54,14 @@ export class FeesService{
             creditCsutomer:info.cdtNumber, //
             productList: MopService.mopList//imidate sha our ben but wait, i don't choose it yet!
         };
-		 
+         
+        console.log('Request:Request:Request:Request:');
         console.log(jason);
         let body = JSON.stringify(jason);
+        console.log('Requesting Fees Calculation [END]');
 
         return this._http.post(this.url,body).map((res:any)=>{
-            console.log("response is recived");
+            console.log("Response is recived:Response:Response:Response:");
             console.log(res);
             
             let answer = JSON.parse(res._body); 
@@ -72,7 +74,7 @@ export class FeesService{
             this.parseIncomingNonUrgentFee(rsltFees.TwoDaysDelivery);
 
             this.feesSubject.next(this.feeIncoming);
-
+            console.log('Updating DOM with fees results');
             return this.feeIncoming;
         },
     );
@@ -86,7 +88,7 @@ export class FeesService{
         this.feeIncoming.immidiateCableFee = feeJson.CableFees ? feeJson.CableFees:3.2;
         this.feeIncoming.immidiateInternationalFee = feeJson.InternationalFees? feeJson.InternationalFees: 1.5;
         this.feeIncoming.immidiateTaxFee = feeJson.TaxFees?feeJson.TaxFees:0.5;     
-        this.feeIncoming.immidiateFee = this.feeIncoming.totalImmidiateFee() |1;
+        this.feeIncoming.immidiateFee = this.feeIncoming.totalImmidiateFee();
     }
 
     private parseIncomingUrgentFee(feeJson){

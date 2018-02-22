@@ -48,9 +48,7 @@ export class MoneyTransferComponent implements OnInit {
     this.transferInfo.currency = this.currencyList[0];
 
     this._feeService.feesSubject.subscribe((fee:FeeIncomingInfo)=>{
-      console.log("subscribed to fee service and recived fee " + fee);
       this.feeData = fee;
-      
     });
 
   }
@@ -85,12 +83,9 @@ export class MoneyTransferComponent implements OnInit {
     this.transferInfo.bic = this._bicService.autoComplete(this.transferInfo.bic);
     this.transferInfo.bankName = this._bicService.nameComplete(this.transferInfo.bic);
     this.transferInfo.country = this._bicService.retriveCountryFromBic(this.transferInfo.bic);
-    if(this.transferInfo.country !== undefined){
-      console.log('retrived country from bic '+this.transferInfo.country);
-        this._mopService.blockOptions(this.transferInfo.country);
-    }
+    this._mopService.blockOptions(this.transferInfo.country);
 
-    
+   
     this.has_error = "";
     this.isVisible = false;
   }
@@ -101,26 +96,25 @@ export class MoneyTransferComponent implements OnInit {
 
   calculateFees(){
     //if button is blocked then don't press the button
-    // if(this.calculate_fees_disable === "disabled"){
-    //   return;
-    // }
+    if(this.calculate_fees_disable === "disabled"){
+      return;
+    }
 
-    // console.log(this.transferInfo.bankName);
-    // if(this.transferInfo.bankName === undefined){
-    //   this.has_error = "has-error";
-    //   this.isVisible = true;
-    // }else{
-    //   this.has_error = "";
-    //   this.isVisible = false;
-    // }
+    console.log(this.transferInfo.bankName);
+    if(this.transferInfo.bankName === undefined){
+      this.has_error = "has-error";
+      this.isVisible = true;
+    }else{
+      this.has_error = "";
+      this.isVisible = false;
+    }
 
-    // if(this._feeService.isTransferInputValid(this.transferInfo)){
+    if(this._feeService.isTransferInputValid(this.transferInfo)){
     
-    //   console.log(`Starting fee calculation for account ${this.transferInfo.account} amount ${this.transferInfo.amount} and bic ${this.transferInfo.bic}`);
+      console.log(`Starting fee calculation for account ${this.transferInfo.account} amount ${this.transferInfo.amount} and bic ${this.transferInfo.bic}`);
       
-    //   this.transfer_money_disable = "";
-    //   this.calculate_fees_disable = "disabled";
-
+      this.transfer_money_disable = "";
+      this.calculate_fees_disable = "disabled";
    
       this._feeService.startFeesCalculation(this.transferInfo).subscribe((fees:FeeIncomingInfo)=>{
         console.log('started fee calculation '+fees);
@@ -130,13 +124,12 @@ export class MoneyTransferComponent implements OnInit {
         console.log(err);
         this._feeService.setMockingService();
         //handle here fee mock service!!!
-      }
-    );
-    
-    // }else{
-    //   console.log('error cannot transfer money');
-    //   document.getElementById("openModalButton").click();
-    // }
+        }
+      );
+    }else{
+      console.log('error cannot transfer money');
+      document.getElementById("openModalButton").click();
+    }
   }
 
   /*
@@ -155,6 +148,9 @@ export class MoneyTransferComponent implements OnInit {
       document.getElementById("openModalButton2").click();
     }else{
       this.transferInfo.total = this.transferInfo.amount;
+      console.log('oren oren');
+      console.log(this.feeData.productFee);
+      console.log(this.feeData);
       this.isVisible2 = true;
       document.getElementById("openModalButton3").click();
     }    

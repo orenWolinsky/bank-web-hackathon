@@ -44,10 +44,8 @@ export class MopComponent implements OnInit {
         this.nUrg_btn = new MOPOption(MopService.mopList[2],this.active);
 
         this._feeService.feesSubject.subscribe((fee:FeeIncomingInfo)=>{
-          console.log("subscribed to fee service and recived fee " + fee);
           this.feeData = fee;
           this.validateFeeToShow();
-          
         });
         
         this._mopService.mopSubject.subscribe((arr:boolean[])=>{
@@ -152,6 +150,10 @@ export class MopComponent implements OnInit {
   }
 
   private validateFeeToShow(){
+    this.nUrg_btn.mopNA = "";
+    this.immdt_btn.mopNA = "";
+    this.urg_btn.mopNA = "";
+    
     if(this.nUrg_btn.mop_btn_active === "disabled"){
       this.feeData.nonUrgentFee = undefined;
       this.nUrg_btn.mopNA = "N/A";

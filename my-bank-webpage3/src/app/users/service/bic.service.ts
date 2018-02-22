@@ -8,9 +8,8 @@ export class BicService{
     public bicNames:Map<string,string> = new Map<string,string>();
 
     constructor(){
-        this.bicCountryMap.set("fr","FRANCE");
-        this.bicCountryMap.set("FR","FRANCE");
-        this.bicCountryMap.set("IS","ISRAEL");
+        this.bicCountryMap.set("KKK","FRANCE");
+        this.bicCountryMap.set("US","USA");
 
         this.bicMap.set("MRM","MRMDUS33XXX");
         this.bicMap.set("HSBC","HSBCHKHHXXX");
